@@ -1,0 +1,56 @@
+import javax.swing;
+import java.awt;
+import java.util.Scanner;
+import java.awt.event;
+
+public class main extends JFrame implememnts ActionListener{
+    Scanner keyboard = new Scanner(System.in);//keyboard input
+
+    int[] gameBoard = new int[boardX][boardY];//2D array as the game board
+    //declaring static variables
+    Static final int boardY = 288;//board y and x values for its size
+    Static final int boardX = 160;//multiples of 32
+    Static final int cellSize = 32;//declaring now, not sure if its needed
+    public static final int[] Tetraminos = {
+        //I piece
+        {
+
+        }
+
+        //L piece
+        {
+
+        }
+
+        //mirriored L piece
+        {
+
+        }
+        
+        //square piece
+        {
+
+        }
+
+        //S piece
+        {
+
+        }
+
+        //mirriored S piece
+        {
+
+        }
+
+        //T piece
+        {
+
+        }
+    }
+
+public void actionPerformed(ActionEvent e){
+
+}
+    
+
+}
