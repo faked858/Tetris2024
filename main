@@ -16,203 +16,205 @@ public class Tetris extends JFrame implements ActionListener{
     Scanner keyboard = new Scanner(System.in);//keyboard input
 
     int[][] gameBoard = new int[boardX][boardY];//2D array as the game board
-    
+
     //declaring static variables
     public static final int boardY = 640;//board y and x values for its size
     public static final int boardX = 320;//multiples of 64
-    public static final int cellSize = 64;//declaring now, not sure if its needed
+    public static final int cellSize = 32;//declaring now, not sure if its needed
     public static final Color[] tetraminosColor = {
-        Color.cyan, Color.blue, Color.orange, Color.yellow, Color.green, Color.pink, Color.red
-    };
-    
+            Color.cyan, Color.blue, Color.orange, Color.yellow, Color.green, Color.pink, Color.red
+        };
+
     public Canvas canvas;
     public JFrame frame;
     public static final int[][][] Tetraminos = {
-        //I piece pos1
-        {
-            {1,0,0,0},
-            {1,0,0,0},
-            {1,0,0,0},
-            {1,0,0,0}
-        },
+            //I piece pos1
+            {
+                {1,0,0,0},
+                {1,0,0,0},
+                {1,0,0,0},
+                {1,0,0,0}
+            },
 
-        //I piece pos2
-        {
-            {1,1,1,1},
-            {0,0,0,0},
-            {0,0,0,0},
-            {0,0,0,0}
-        },
+            //I piece pos2
+            {
+                {1,1,1,1},
+                {0,0,0,0},
+                {0,0,0,0},
+                {0,0,0,0}
+            },
 
-        //L piece pos1
-        {
-            {0,0,0},
-            {1,1,1},
-            {1,0,0}
-        },
+            //L piece pos1
+            {
+                {0,0,0},
+                {1,1,1},
+                {1,0,0}
+            },
 
-        //L piece pos2
-        {
-            {0,1,0},
-            {0,1,0},
-            {0,1,1}
-        },
+            //L piece pos2
+            {
+                {0,1,0},
+                {0,1,0},
+                {0,1,1}
+            },
 
-        //L piece pos3
-        {
-            {0,0,0},
-            {0,0,1},
-            {1,1,1}
-        },
+            //L piece pos3
+            {
+                {0,0,0},
+                {0,0,1},
+                {1,1,1}
+            },
 
-        //L piece pos4
-        {
-            {1,1,0},
-            {0,1,0},
-            {0,1,0}
-        },
+            //L piece pos4
+            {
+                {1,1,0},
+                {0,1,0},
+                {0,1,0}
+            },
 
-        //mirriored L piece pos1
-        {
-            {0,0,0},
-            {1,1,1},
-            {0,0,1}
-        },
+            //mirriored L piece pos1
+            {
+                {0,0,0},
+                {1,1,1},
+                {0,0,1}
+            },
 
-        //mirriored L piece pos2
-        {
-            {0,1,0},
-            {0,1,0},
-            {1,1,0}
-        },
+            //mirriored L piece pos2
+            {
+                {0,1,0},
+                {0,1,0},
+                {1,1,0}
+            },
 
-        //mirriored L piece pos3
-        {
-            {0,0,0},
-            {1,0,0},
-            {1,1,1}
-        },
+            //mirriored L piece pos3
+            {
+                {0,0,0},
+                {1,0,0},
+                {1,1,1}
+            },
 
-        //mirriored L piece pos4
-        {
-            {0,1,1},
-            {0,1,0},
-            {0,1,0}
-        },
-        
-        //square piece
-        {   {0,0,0,0},
-            {0,1,1,0},
-            {0,1,1,0},
-            {0,0,0,0}
-        },
+            //mirriored L piece pos4
+            {
+                {0,1,1},
+                {0,1,0},
+                {0,1,0}
+            },
 
-        //S piece pos1
-        {
-            {0,0,0},
-            {0,1,1},
-            {1,1,0}
-        },
+            //square piece
+            {   {0,0,0,0},
+                {0,1,1,0},
+                {0,1,1,0},
+                {0,0,0,0}
+            },
 
-        //S piece pos2
-        {
-            {1,0,0},
-            {1,1,0},
-            {0,1,0}
-        },
+            //S piece pos1
+            {
+                {0,0,0},
+                {0,1,1},
+                {1,1,0}
+            },
 
-        //mirriored S piece pos1
-        {
-            {1,1,0},
-            {0,1,1},
-            {0,0,0}
-        },
+            //S piece pos2
+            {
+                {1,0,0},
+                {1,1,0},
+                {0,1,0}
+            },
 
-        //mirriored S piece pos2
-        {
-            {0,1,0},
-            {1,1,0},
-            {1,0,0}
-        },
+            //mirriored S piece pos1
+            {
+                {1,1,0},
+                {0,1,1},
+                {0,0,0}
+            },
 
-        //T piece pos1
-        {
-            {1,1,1},
-            {0,1,0},
-            {0,0,0}
-        },
+            //mirriored S piece pos2
+            {
+                {0,1,0},
+                {1,1,0},
+                {1,0,0}
+            },
 
-         //T piece pos2
-         {
-            {0,1,0},
-            {0,1,1},
-            {0,1,0}
-        },
+            //T piece pos1
+            {
+                {1,1,1},
+                {0,1,0},
+                {0,0,0}
+            },
 
-        //T piece pos3
-        {
-            {0,0,0},
-            {0,1,0},
-            {1,1,1}
-        },
+            //T piece pos2
+            {
+                {0,1,0},
+                {0,1,1},
+                {0,1,0}
+            },
 
-        //T piece pos4
-        {
-            {0,1,0},
-            {1,1,0},
-            {0,1,0}
-        }
-    };
-    
+            //T piece pos3
+            {
+                {0,0,0},
+                {0,1,0},
+                {1,1,1}
+            },
+
+            //T piece pos4
+            {
+                {0,1,0},
+                {1,1,0},
+                {0,1,0}
+            }
+        };
+
     //non static variables
     public int currentPiece;
     public int rotation;
     ArrayList<Integer> nextPiece = new ArrayList<Integer>();//arraylist for next pieces
-    
 
     public void actionPerformed(ActionEvent e){
-        
     }
     
-    public Tetris(){
-        
+    public Tetris(){//constructor
+        emptyBoard();
+        //gameBoard[0][1]=1; testing emptyboard
     }
 
     //public void main (String[] args){
-      //  display();
-        //}
-        
+    //  display();
+    //}
+
     public void emptyBoard(){
-        for(int i=0; i < boardX; i++){
-            for (int j=0; j < boardY; i++){
-                gameBoard[i][j]=0;
+        for(int y=0; y < boardY; y++){
+            for (int x=0; x < boardX; x++){
+                gameBoard[x][y]=0;
             }
         }
+        repaint();
     }
 
     public void paint (Graphics g){
         super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
+                
         
-        
-        for(int i=0; i<boardX; i++){
-            for(int j=0; j<boardY; j++){
-               g2.setColor(Color.BLACK);
-               g2.fillRect(cellSize*i,cellSize*j,cellSize,cellSize);
+        for(int y=0; y<boardX; y++){
+            for(int x=0; x<boardY; x++){
+                if(gameBoard[y][x]==0){
+                    g2.setColor(Color.BLACK);
+                    g2.fillRect(cellSize*y,cellSize*x,cellSize,cellSize);
+                }
             }
         }
     }
-    
+
     public void display(){
         //System.out.println("I am running"); debugging
         setTitle("Tetris");//name of the window
         this.getContentPane().setPreferredSize(new Dimension(boardX,boardY));//specified demensions
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);//exit on close
-        
+
         repaint();
         this.pack();
         this.toFront();//put winodw in the front
         this.setVisible(true);//show window
     }
-    
-    }
+
+}
