@@ -1,17 +1,33 @@
-import javax.swing;
-import java.awt;
-import java.util.Scanner;
-import java.awt.event;
 
-public class main extends JFrame implememnts ActionListener{
+import javax.swing.*;
+import java.awt.*;
+import java.util.Scanner;
+import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.geom.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class Tetris extends JFrame implements ActionListener{
     Scanner keyboard = new Scanner(System.in);//keyboard input
 
-    int[] gameBoard = new int[boardX][boardY];//2D array as the game board
+    int[][] gameBoard = new int[boardX][boardY];//2D array as the game board
+    
     //declaring static variables
-    Static final int boardY = 288;//board y and x values for its size
-    Static final int boardX = 160;//multiples of 32
-    Static final int cellSize = 32;//declaring now, not sure if its needed
-    public static final int[][] Tetraminos = {
+    public static final int boardY = 640;//board y and x values for its size
+    public static final int boardX = 320;//multiples of 64
+    public static final int cellSize = 64;//declaring now, not sure if its needed
+    public static final Color[] tetraminosColor = {
+        Color.cyan, Color.blue, Color.orange, Color.yellow, Color.green, Color.pink, Color.red
+    };
+    
+    public Canvas canvas;
+    public JFrame frame;
+    public static final int[][][] Tetraminos = {
         //I piece pos1
         {
             {1,0,0,0},
@@ -103,7 +119,7 @@ public class main extends JFrame implememnts ActionListener{
             {1,0,0},
             {1,1,0},
             {0,1,0}
-        }
+        },
 
         //mirriored S piece pos1
         {
@@ -117,7 +133,7 @@ public class main extends JFrame implememnts ActionListener{
             {0,1,0},
             {1,1,0},
             {1,0,0}
-        }
+        },
 
         //T piece pos1
         {
@@ -146,13 +162,57 @@ public class main extends JFrame implememnts ActionListener{
             {1,1,0},
             {0,1,0}
         }
-    }
-
-public void actionPerformed(ActionEvent e){
-
-}
-
-public static void main (String[] args){}
+    };
+    
+    //non static variables
+    public int currentPiece;
+    public int rotation;
+    ArrayList<Integer> nextPiece = new ArrayList<Integer>();//arraylist for next pieces
     
 
-}
+    public void actionPerformed(ActionEvent e){
+        
+    }
+    
+    public Tetris(){
+        
+    }
+
+    //public void main (String[] args){
+      //  display();
+        //}
+        
+    public void emptyBoard(){
+        for(int i=0; i < boardX; i++){
+            for (int j=0; j < boardY; i++){
+                gameBoard[i][j]=0;
+            }
+        }
+    }
+
+    public void paint (Graphics g){
+        super.paint(g);
+        Graphics2D g2 = (Graphics2D) g;
+        
+        
+        for(int i=0; i<boardX; i++){
+            for(int j=0; j<boardY; j++){
+               g2.setColor(Color.BLACK);
+               g2.fillRect(cellSize*i,cellSize*j,cellSize,cellSize);
+            }
+        }
+    }
+    
+    public void display(){
+        //System.out.println("I am running"); debugging
+        setTitle("Tetris");//name of the window
+        this.getContentPane().setPreferredSize(new Dimension(boardX,boardY));//specified demensions
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);//exit on close
+        
+        repaint();
+        this.pack();
+        this.toFront();//put winodw in the front
+        this.setVisible(true);//show window
+    }
+    
+    }
