@@ -1,0 +1,27 @@
+import javax.swing.*;
+import java.awt.*;
+import javax.swing.JPanel;
+import javax.swing.JFrame;
+public class PlayEvents extends JPanel
+{
+    //class that will manage all events on the board, including score, clearing lines, etc
+    //all sides of the play area
+    final static int LEFTX = 0;
+    final static int RIGHTX = 320;
+    final static int TOPY = 0;
+    final static int BOTTOMY = 640;
+    public PlayEvents()
+    {
+        
+    }
+    
+    public void update(){
+        
+    }
+    
+    public void paint(Graphics g){
+        super.paint(g);
+        Graphics2D g2 = (Graphics2D)g;
+        
+    }
+}
