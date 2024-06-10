@@ -1,0 +1,12 @@
+package Tetriminos;
+
+
+
+public class MinoL1 extends SuperMino
+{
+    
+    public MinoL1()
+    {
+        
+    }
+}
