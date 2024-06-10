@@ -24,7 +24,6 @@ public class Tetris extends JFrame implements ActionListener{
     public static final Color[] tetraminosColor = {
             Color.cyan, Color.blue, Color.orange, Color.yellow, Color.green, Color.pink, Color.red
         };
-
     public Canvas canvas;
     public JFrame frame;
     public static final int[][][] Tetraminos = {
@@ -177,9 +176,20 @@ public class Tetris extends JFrame implements ActionListener{
         //gameBoard[0][1]=1; testing emptyboard
     }
 
-    //public void main (String[] args){
-    //  display();
-    //}
+    public  void main (){
+        JFrame window = new JFrame("Tetris");//window name
+        window.setDefaultCloseOperation(EXIT_ON_CLOSE);//exit on close
+        window.setResizable(false);//make sure window isnt resizable
+        window.setLocationRelativeTo(null);// window pops up on the centre of the screen
+        
+        GamePanel gp = new GamePanel();//adds the GamePanel class to my window
+        window.add(gp);
+        window.pack();
+        repaint();
+
+        window.toFront();//put winodw in the front
+        window.setVisible(true);//show window
+    }
 
     public void emptyBoard(){
         for(int y=0; y < boardY; y++){
@@ -190,31 +200,8 @@ public class Tetris extends JFrame implements ActionListener{
         repaint();
     }
 
-    public void paint (Graphics g){
-        super.paint(g);
-        Graphics2D g2 = (Graphics2D) g;
-                
+    public void gamePanel(){
         
-        for(int y=0; y<boardX; y++){
-            for(int x=0; x<boardY; x++){
-                if(gameBoard[y][x]==0){
-                    g2.setColor(Color.BLACK);
-                    g2.fillRect(cellSize*y,cellSize*x,cellSize,cellSize);
-                }
-            }
-        }
-    }
-
-    public void display(){
-        //System.out.println("I am running"); debugging
-        setTitle("Tetris");//name of the window
-        this.getContentPane().setPreferredSize(new Dimension(boardX,boardY));//specified demensions
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);//exit on close
-
-        repaint();
-        this.pack();
-        this.toFront();//put winodw in the front
-        this.setVisible(true);//show window
     }
 
 }
