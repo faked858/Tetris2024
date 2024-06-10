@@ -10,27 +10,38 @@ public class GamePanel extends JPanel implements Runnable
     Thread gameThread;
     public GamePanel()
     {
-      this.setPreferredSize(new Dimension(WIDTH,HEIGHT));
-      this.setBackground(Color.BLACK);
+        this.setPreferredSize(new Dimension(WIDTH,HEIGHT));
+        this.setBackground(Color.BLACK);
     }
-    
+
     public void launchGame(){//initializes game
         gameThread = new Thread(this);
         gameThread.start();//automaticly calls the run method
     }
-    
+
     public void run(){
-        
+        //game loop, updates the frames and score etc
+        int TICKLENGTH = 1000000/FPS;//length of a single tick in time
+        long lastUpdate = System.nanoTime()/1000000;//current vitrual time in miliseconds
+        while(gameThread != null){
+            long currentTime = System.nanoTime()/1000000;//current time of the game
+            if(currentTime < lastUpdate - TICKLENGTH){//what the interval to update the game is 
+                //repaint();
+                lastUpdate += TICKLENGTH;
+            }
+            repaint();
+            updateGame();
+            System.out.println(currentTime);
+        }
     }
     
-    public void updategame(){
-        
+    public void updateGame(){
+
     }
-    
-    public void paint (Graphics g){
+
+        public void paint (Graphics g){
         super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
-                
         
     }
 }
