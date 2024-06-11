@@ -1,5 +1,5 @@
 package Tetriminos;
-
+import java.awt.*;
 
 
 public class MinoL1 extends SuperMino
@@ -7,6 +7,22 @@ public class MinoL1 extends SuperMino
     
     public MinoL1()
     {
+        createBlock(Color.orange);//call the create block method, make it orange
+    }
+    
+    public void setXY(int x, int y){// set the default X,Y of the mino
+        // o   this one is b1
+        // o   b0, because its the centre of rotation and it doesnt change
+        // o o b2, b3
         
+        b[0].x=x;
+        b[0].y=y;
+        b[1].x = b[0].x; //b1 is above b0, so x is the same
+        b[1].y = b[0].y - Block.CELLSIZE;
+        b[2].x = b[0].x;
+        b[2].y = b[0].y + Block.CELLSIZE;
+        b[3].x = b[0].x + Block.CELLSIZE;
+        b[3].y = b[0].y + Block.CELLSIZE;
+        //when b0 gets updated, all other blocks update to match its position
     }
 }

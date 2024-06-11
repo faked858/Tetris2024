@@ -11,7 +11,7 @@ public class SuperMino
     }
     
     public void createBlock(Color c){//creates each of the four blocks that make up each tetrimino
-        b[0] = new Block(c);
+        b[0] = new Block(c);//each one of these represents a block of a tetrimino
         b[1] = new Block(c);
         b[2] = new Block(c);
         b[3] = new Block(c);
