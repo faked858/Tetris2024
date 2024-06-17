@@ -2,18 +2,22 @@ import javax.swing.*;
 import java.awt.*;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
+import java.io.*;
+import java.lang.Thread;
 public class GamePanel extends JPanel implements Runnable  
 {
     public static final int WIDTH = 320;
     public static final int HEIGHT = 640;
-    final int FPS = 60;
+    final int FPS = 1/60;
     Thread gameThread;
     PlayEvents PE;
+    Tetris TE;
     public GamePanel()
     {
         this.setPreferredSize(new Dimension(WIDTH,HEIGHT));
         this.setBackground(Color.BLACK);
         PE = new PlayEvents();
+        TE = new Tetris();
     }
 
     public void launchGame(){//initializes game
@@ -22,26 +26,35 @@ public class GamePanel extends JPanel implements Runnable
     }
 
     public void run(){
+        //System.out.println("is this running");
+        main();
         //game loop, updates the frames and score etc
-        int TICKLENGTH = 1000000/FPS;//length of a single tick in time
-        long lastUpdate = System.nanoTime()/1000000;//current vitrual time in miliseconds
+        int FRAMETIME = 16;//length of a single tick in time, roughly 60 FPS
+        long lastUpdate= 0;
         while(gameThread != null){
-            long currentTime = System.nanoTime()/1000000;//current time of the game
-            if(currentTime < lastUpdate - TICKLENGTH){//what the interval to update the game is 
-                //repaint();
-                lastUpdate += TICKLENGTH;
-            }
+            //System.out.println("is this running");
+            long currentTime = lastUpdate += FRAMETIME;//current time of the game in miliseconds
             repaint();
             updateGame();
-            System.out.println(currentTime);
+            try{
+                Thread.sleep(FRAMETIME);
+            }catch (Exception e) {
+                System.out.println(e);
+            }
+
+            //System.out.println(currentTime+" , "+lastUpdate+" , "+FRAMETIME);
         }
     }
-    
+
     public void updateGame(){
         PE.update();
     }
-
-        public void paint (Graphics g){
+    
+    public void main(){
+        TE.main();
+    }
+    
+    public void paint(Graphics g){
         super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
         PE.paint(g2);

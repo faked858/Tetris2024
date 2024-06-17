@@ -18,7 +18,7 @@ public class Tetris extends JFrame implements ActionListener{
     int[][] gameBoard = new int[BOARDX][BOARDY];//2D array as the game board
 
     //declaring static variables
-    public static final int BOARDY = 640;//board y and x values for its size
+    public static final int BOARDY = 640;//redundent
     public static final int BOARDX = 320;//multiples of 32, to fit 32x32 size blocks evenly
     public Canvas canvas;
     public JFrame frame;

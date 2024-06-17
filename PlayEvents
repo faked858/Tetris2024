@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.JFrame;
 
 import Tetriminos.SuperMino;
+import Tetriminos.Block;
 public class PlayEvents extends JPanel
 {
     //class that will manage all events on the board, including score, clearing lines, etc
@@ -15,21 +16,27 @@ public class PlayEvents extends JPanel
     
     SuperMino currentMino;
     final static int DEFAULTX = RIGHTX/2;
-    final static int DEFAULTY = TOPY + RIGHTX/6;//default x.y positions for the tetriminos
+    final static int DEFAULTY = TOPY + 2*Block.CELLSIZE;//starting x.y positions for the tetriminos
     
     public PlayEvents()
     {
-
+        currentMino = new Tetriminos.MinoL1();
+        currentMino.setXY(DEFAULTX,DEFAULTY);
         
     }
     
     public void update(){
-        
+        currentMino.update();
     }
     
     public void paint(Graphics g){
         super.paint(g);
         Graphics2D g2 = (Graphics2D)g;
+        
+        //drawing the currentMino
+        if(currentMino != null){
+            currentMino.draw(g2);
+        }
         
     }
 }
