@@ -14,6 +14,7 @@ public class PlayEvents extends JPanel
     final static int TOPY = 0;
     final static int BOTTOMY = 640;
     
+    
     SuperMino currentMino;
     final static int DEFAULTX = RIGHTX/2;
     final static int DEFAULTY = TOPY + 2*Block.CELLSIZE;//starting x.y positions for the tetriminos

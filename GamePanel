@@ -18,6 +18,8 @@ public class GamePanel extends JPanel implements Runnable
         this.setBackground(Color.BLACK);
         PE = new PlayEvents();
         TE = new Tetris();
+        //this.addkeyListener(new KeyInputs());
+        //this.setFocusable(true);
     }
 
     public void launchGame(){//initializes game
@@ -27,9 +29,8 @@ public class GamePanel extends JPanel implements Runnable
 
     public void run(){
         //System.out.println("is this running");
-        main();
         //game loop, updates the frames and score etc
-        int FRAMETIME = 16;//length of a single tick in time, roughly 60 FPS
+        int FRAMETIME = 16;//length of a single tick in time, in miliseconds, roughly 60 FPS
         long lastUpdate= 0;
         while(gameThread != null){
             //System.out.println("is this running");
@@ -41,17 +42,13 @@ public class GamePanel extends JPanel implements Runnable
             }catch (Exception e) {
                 System.out.println(e);
             }
-
+            
             //System.out.println(currentTime+" , "+lastUpdate+" , "+FRAMETIME);
         }
     }
 
     public void updateGame(){
         PE.update();
-    }
-    
-    public void main(){
-        TE.main();
     }
     
     public void paint(Graphics g){

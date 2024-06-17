@@ -10,7 +10,7 @@ public class MinoL1 extends SuperMino
         createBlock(Color.orange);//call the create block method, make it orange
     }
     
-    public void setXY(int x, int y){// sets the mino at specified x,y location
+    public void setXY(int x, int y){////creates the shape of the block by setting each individual block to its respective coordinates
         // o   b1
         // o   b0, because its the centre of rotation and it doesnt change
         // o o b2, b3

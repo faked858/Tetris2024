@@ -5,6 +5,8 @@ public class SuperMino
     //this class will be the super class for all tetrimios, all minos will extend this class
     public Block b[] = new Block[4];
     public Block tempB[] = new Block[4];//two block classes
+    final static int dropInterval = 30; //every 30 frames a tetrimino will drop, or roughly every half second
+    int autoDrop =0;//counts the drop interval
         public SuperMino()
     {
         
@@ -30,7 +32,15 @@ public class SuperMino
     }
     
     public void update(){
-    
+        //System.out.println("SP.update is running "+autoDrop);
+        autoDrop++;
+        if(autoDrop == dropInterval){
+            b[0].y+= Block.CELLSIZE;
+            b[1].y+= Block.CELLSIZE;
+            b[2].y+= Block.CELLSIZE;
+            b[3].y+= Block.CELLSIZE;
+            autoDrop = 0;
+        }
     }
     
     public void draw(Graphics2D g2){

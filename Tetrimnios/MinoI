@@ -1,0 +1,23 @@
+package Tetriminos;
+import java.awt.*;
+
+/**
+ * Write a description of class MinoI here.
+ *
+ * @author (your name)
+ * @version (a version number or a date)
+ */
+public class MinoI extends SuperMino
+{
+    public MinoI()
+    {
+        createBlock(Color.orange);
+    }
+    
+    public void setXY(int x, int y){//creates the shape of the block by setting each individual block to its respective coordinates
+        // o b0
+        // o b1
+        // o b2
+        // o b3
+    }
+}
