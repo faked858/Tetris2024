@@ -7,15 +7,40 @@ import java.awt.event.KeyEvent;
  * @version (a version number or a date)
  */
 public class KeyInputs implements KeyListener
-{
+{   
+    boolean wPressed;
+    boolean aPressed;
+    boolean sPressed;
+    boolean dPressed;
+    
+    boolean upPressed;
+    boolean downressed;
+    boolean leftPressed;
+    boolean rightPressed;
+    
     public KeyInputs()
     {
         
     }
     
-    public void keyTyped(KeyEvent e){}
-    public void keyPressed(KeyEvent e){}
-    public void keyReleased(KeyEvent e){}
+    public void keyTyped(KeyEvent e){}//dont need this
+    
+    public void keyPressed(KeyEvent e){
+        int key = e.getKeyCode();
+        switch(key){
+            //case key == KeyEvent.VK_W:
+                //wPressed = true;
+                //break;
+            
+        }
+        
+        if(e.getKeyCode() == KeyEvent.VK_W){
+            wPressed = true;
+        }
+    }
+    public void keyReleased(KeyEvent e){
+        
+    }
     
     
 }

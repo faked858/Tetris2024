@@ -18,8 +18,8 @@ public class GamePanel extends JPanel implements Runnable
         this.setBackground(Color.BLACK);
         PE = new PlayEvents();
         TE = new Tetris();
-        //this.addkeyListener(new KeyInputs());
-        //this.setFocusable(true);
+        this.addKeyListener(new KeyInputs());
+        this.setFocusable(true);
     }
 
     public void launchGame(){//initializes game
