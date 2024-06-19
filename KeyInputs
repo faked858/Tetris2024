@@ -26,20 +26,37 @@ public class KeyInputs implements KeyListener
     public void keyTyped(KeyEvent e){}//dont need this
     
     public void keyPressed(KeyEvent e){
-        int key = e.getKeyCode();
+        int key = e.getKeyCode();      
         switch(key){
-            //case key == KeyEvent.VK_W:
-                //wPressed = true;
-                //break;
-            
-        }
-        
-        if(e.getKeyCode() == KeyEvent.VK_W){
-            wPressed = true;
+            case KeyEvent.VK_W:
+                upPressed = true;
+                break;
+            case KeyEvent.VK_A:
+                leftPressed = true;
+                break;
+            case KeyEvent.VK_S:
+                downPressed = true;
+                break;
+            case KeyEvent.VK_D:
+                rightPressed = true;
+                break;
         }
     }
     public void keyReleased(KeyEvent e){
-        
+        switch(key){
+            case KeyEvent.VK_W:
+                upPressed = false;
+                break;
+            case KeyEvent.VK_A:
+                leftPressed = false;
+                break;
+            case KeyEvent.VK_S:
+                downPressed = false;
+                break;
+            case KeyEvent.VK_D:
+                rightPressed = false;
+                break;
+        }
     }
     
     
