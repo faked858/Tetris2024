@@ -22,161 +22,20 @@ public class Tetris extends JFrame implements ActionListener{
     public static final int BOARDX = 320;//multiples of 32, to fit 32x32 size blocks evenly
     public Canvas canvas;
     public JFrame frame;
-    public static final int[][][] Tetraminos = {
-            //I piece pos1
-            {
-                {1,0,0,0},
-                {1,0,0,0},
-                {1,0,0,0},
-                {1,0,0,0}
-            },
-
-            //I piece pos2
-            {
-                {1,1,1,1},
-                {0,0,0,0},
-                {0,0,0,0},
-                {0,0,0,0}
-            },
-
-            //L piece pos1
-            {
-                {0,0,0},
-                {1,1,1},
-                {1,0,0}
-            },
-
-            //L piece pos2
-            {
-                {0,1,0},
-                {0,1,0},
-                {0,1,1}
-            },
-
-            //L piece pos3
-            {
-                {0,0,0},
-                {0,0,1},
-                {1,1,1}
-            },
-
-            //L piece pos4
-            {
-                {1,1,0},
-                {0,1,0},
-                {0,1,0}
-            },
-
-            //mirriored L piece pos1
-            {
-                {0,0,0},
-                {1,1,1},
-                {0,0,1}
-            },
-
-            //mirriored L piece pos2
-            {
-                {0,1,0},
-                {0,1,0},
-                {1,1,0}
-            },
-
-            //mirriored L piece pos3
-            {
-                {0,0,0},
-                {1,0,0},
-                {1,1,1}
-            },
-
-            //mirriored L piece pos4
-            {
-                {0,1,1},
-                {0,1,0},
-                {0,1,0}
-            },
-
-            //square piece
-            {   {0,0,0,0},
-                {0,1,1,0},
-                {0,1,1,0},
-                {0,0,0,0}
-            },
-
-            //S piece pos1
-            {
-                {0,0,0},
-                {0,1,1},
-                {1,1,0}
-            },
-
-            //S piece pos2
-            {
-                {1,0,0},
-                {1,1,0},
-                {0,1,0}
-            },
-
-            //mirriored S piece pos1
-            {
-                {1,1,0},
-                {0,1,1},
-                {0,0,0}
-            },
-
-            //mirriored S piece pos2
-            {
-                {0,1,0},
-                {1,1,0},
-                {1,0,0}
-            },
-
-            //T piece pos1
-            {
-                {1,1,1},
-                {0,1,0},
-                {0,0,0}
-            },
-
-            //T piece pos2
-            {
-                {0,1,0},
-                {0,1,1},
-                {0,1,0}
-            },
-
-            //T piece pos3
-            {
-                {0,0,0},
-                {0,1,0},
-                {1,1,1}
-            },
-
-            //T piece pos4
-            {
-                {0,1,0},
-                {1,1,0},
-                {0,1,0}
-            }
-        };
-
-    //non static variables
-    public int currentPiece;
-    public int rotation;
-    ArrayList<Integer> nextPiece = new ArrayList<Integer>();//arraylist for next pieces
+    
 
     public void actionPerformed(ActionEvent e){
     }
     
     public Tetris(){//constructor
         emptyBoard();
-        //gameBoard[0][1]=1; testing emptyboard
     }
 
-    public  void main (){
+    public  void main (){ 
         JFrame window = new JFrame("Tetris");//window name
-        window.setDefaultCloseOperation(EXIT_ON_CLOSE);//exit on close
+        window.setDefaultCloseOperation(EXIT_ON_CLOSE);//exit on close 
         window.setResizable(false);//make sure window isnt resizable
-        window.setLocationRelativeTo(null);// window pops up on the centre of the screen
+        //window.setLocationRelativeTo(null);// window pops up on the centre of the screen
         
         GamePanel gp = new GamePanel();//adds the GamePanel class to my window
         window.add(gp);

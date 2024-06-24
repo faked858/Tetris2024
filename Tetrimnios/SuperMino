@@ -7,9 +7,10 @@ public class SuperMino
     public Block tempB[] = new Block[4];//two block classes
     final static int dropInterval = 30; //every 30 frames a tetrimino will drop, or roughly every half second
     int autoDrop =0;//counts the drop interval
+    KeyInputs KI; 
         public SuperMino()
     {
-        
+        KI = new KeyInputs();
     }
     
     public void createBlock(Color c){//creates each of the four blocks that make up each tetrimino
@@ -31,8 +32,39 @@ public class SuperMino
         
     }
     
-    public void update(){
-        //System.out.println("SP.update is running "+autoDrop);
+    public void update(){//updates the screen and handles tetrimino movement
+        
+        System.out.println("superMino leftPressed is "+KI.leftPressed());
+        if(KI.leftPressed()){
+            System.out.println("left trigger");
+            b[0].x -=Block.CELLSIZE;
+            b[1].x -=Block.CELLSIZE;
+            b[2].x -=Block.CELLSIZE;
+            b[3].x -=Block.CELLSIZE;
+            
+            //KI.leftPressed = false;
+        }
+        
+        if(KI.downPressed){
+            b[0].y +=Block.CELLSIZE;
+            b[1].y +=Block.CELLSIZE;
+            b[2].y +=Block.CELLSIZE;
+            b[3].y +=Block.CELLSIZE;
+            
+            KI.downPressed = false;
+            autoDrop = 0;
+            //reset the autodrop counter everytime user moves it down
+        }
+        
+        if(KI.rightPressed){
+            b[0].x +=Block.CELLSIZE;
+            b[1].x +=Block.CELLSIZE;
+            b[2].x +=Block.CELLSIZE;
+            b[3].x +=Block.CELLSIZE;
+            
+            KI.rightPressed = false;
+        }
+        
         autoDrop++;
         if(autoDrop == dropInterval){
             b[0].y+= Block.CELLSIZE;
