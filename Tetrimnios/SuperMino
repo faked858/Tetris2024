@@ -5,9 +5,10 @@ public class SuperMino
     //this class will be the super class for all tetrimios, all minos will extend this class
     public Block b[] = new Block[4];
     public Block tempB[] = new Block[4];//two block classes
-    final static int dropInterval = 30; //every 30 frames a tetrimino will drop, or roughly every half second
+    final static int DROPINTERVAL = 30; //every 30 frames a tetrimino will drop, or roughly every half second
     int autoDrop =0;//counts the drop interval
     KeyInputs KI; 
+    public int direction = 0;//0,1,2,3 represent each possible direction for each tetrimino
         public SuperMino()
     {
         KI = new KeyInputs();
@@ -24,18 +25,45 @@ public class SuperMino
         tempB[3] = new Block(c);
     }
     
-    public void setXY(int x, int y){//will set the Xy of each block
-        
+    public void setXY(int x, int y){
     }
     
     public void updateXY(int direction){
-        
+        this.direction = direction;//temp array used if a rotation needs to be canceled becuase collision
+        b[0].x = tempB[0].x;
+        b[0].y = tempB[0].y;
+        b[1].x = tempB[1].x;
+        b[1].y = tempB[1].y;
+        b[2].x = tempB[2].x;
+        b[2].y = tempB[2].y;
+        b[3].x = tempB[3].x;
+        b[3].y = tempB[3].y;
     }
     
+    public void getDirection0(){}
+    public void getDirection1(){}
+    public void getDirection2(){}
+    public void getDirection3(){}
+    
     public void update(){//updates the screen and handles tetrimino movement
+        boolean leftTrue = KI.leftPressed;
+        
+        if(KI.upPressed){
+            switch(direction){
+                case 0: getDirection1();
+                break;
+                case 1: getDirection2();
+                break;
+                case 2: getDirection3();
+                break;
+                case 3: getDirection0();
+                break;
+            }
+            KI.upPressed = false;
+        }
         
         System.out.println("superMino leftPressed is "+KI.leftPressed());
-        if(KI.leftPressed()){
+        if(leftTrue){
             System.out.println("left trigger");
             b[0].x -=Block.CELLSIZE;
             b[1].x -=Block.CELLSIZE;
@@ -66,7 +94,7 @@ public class SuperMino
         }
         
         autoDrop++;
-        if(autoDrop == dropInterval){
+        if(autoDrop == DROPINTERVAL){//once autodrop reaches 30, reset back to 0
             b[0].y+= Block.CELLSIZE;
             b[1].y+= Block.CELLSIZE;
             b[2].y+= Block.CELLSIZE;
@@ -75,7 +103,7 @@ public class SuperMino
         }
     }
     
-    public void draw(Graphics2D g2){
+    public void draw(Graphics2D g2){//draw each block
         g2.setColor(b[0].c);
         g2.fillRect(b[0].x, b[0].y, Block.CELLSIZE, Block.CELLSIZE);
         g2.fillRect(b[1].x, b[1].y, Block.CELLSIZE, Block.CELLSIZE);
