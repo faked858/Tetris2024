@@ -12,10 +12,11 @@ public class PlayEvents extends JPanel
 {
     //class that will manage all events on the board, including score, clearing lines, etc
     //all sides of the play area
+
     final static int LEFTX = 0;
     final static int RIGHTX = 320;
     final static int TOPY = 0;
-    final static int BOTTOMY = 640;
+    final static int BOTTOMY = 640;   
 
     SuperMino currentMino;
     final static int DEFAULTX = RIGHTX/2;
@@ -29,31 +30,30 @@ public class PlayEvents extends JPanel
     }
 
     public SuperMino minoArray(){
-        SuperMino mino0 = new Tetriminos.MinoL1();
-        SuperMino mino1 = new Tetriminos.MinoL2();
-        SuperMino mino2 = new Tetriminos.MinoT();
-        SuperMino mino3 = new Tetriminos.MinoI();
-        SuperMino mino4 = new Tetriminos.MinoO();
-        SuperMino mino5 = new Tetriminos.MinoS1();
-        SuperMino mino6 = new Tetriminos.MinoS2();
-
         ArrayList<SuperMino> minoBag = new ArrayList<SuperMino>();
-        minoBag.add(mino0);
-        minoBag.add(mino1);
-        minoBag.add(mino2);
-        minoBag.add(mino3);
-        minoBag.add(mino4);
-        minoBag.add(mino5);
-        minoBag.add(mino6);
-        
+        //add two of each mino to the minobag
+        minoBag.add(new Tetriminos.MinoL1());
+        minoBag.add(new Tetriminos.MinoL1());
+        minoBag.add(new Tetriminos.MinoL2());
+        minoBag.add(new Tetriminos.MinoL2());
+        minoBag.add(new Tetriminos.MinoT());
+        minoBag.add(new Tetriminos.MinoT());
+        minoBag.add(new Tetriminos.MinoI());
+        minoBag.add(new Tetriminos.MinoI());
+        minoBag.add(new Tetriminos.MinoO());
+        minoBag.add(new Tetriminos.MinoO());
+        minoBag.add(new Tetriminos.MinoS1());
+        minoBag.add(new Tetriminos.MinoS1());
+        minoBag.add(new Tetriminos.MinoS2());
+        minoBag.add(new Tetriminos.MinoS2());
         //System.out.println("before "+ minoBag);
-        
+
         Collections.shuffle(minoBag);
         //System.out.println("after "+ minoBag);
-        
+
         //loops through the array and selects a shuffled mino
         for(int i = 0; i < minoBag.size(); i++){
-            if(i <= 7){
+            if(i <= minoBag.size()){
                 return minoBag.get(i);//return the selected mino
             }else{
                 i = 0;
