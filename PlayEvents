@@ -1,7 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.*;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
+import java.util.ArrayList;
+import java.util.Random;
 
 import Tetriminos.SuperMino;
 import Tetriminos.Block;
@@ -13,32 +16,65 @@ public class PlayEvents extends JPanel
     final static int RIGHTX = 320;
     final static int TOPY = 0;
     final static int BOTTOMY = 640;
-    
-    
+
     SuperMino currentMino;
     final static int DEFAULTX = RIGHTX/2;
     final static int DEFAULTY = TOPY + 2*Block.CELLSIZE;//starting x.y positions for the tetriminos
-    
+
     public PlayEvents()
     {
-        currentMino = new Tetriminos.MinoL1();
+        currentMino = minoArray();
         currentMino.setXY(DEFAULTX,DEFAULTY);
-        
+
     }
-    
+
+    public SuperMino minoArray(){
+        SuperMino mino0 = new Tetriminos.MinoL1();
+        SuperMino mino1 = new Tetriminos.MinoL2();
+        SuperMino mino2 = new Tetriminos.MinoT();
+        SuperMino mino3 = new Tetriminos.MinoI();
+        SuperMino mino4 = new Tetriminos.MinoO();
+        SuperMino mino5 = new Tetriminos.MinoS1();
+        SuperMino mino6 = new Tetriminos.MinoS2();
+
+        ArrayList<SuperMino> minoBag = new ArrayList<SuperMino>();
+        minoBag.add(mino0);
+        minoBag.add(mino1);
+        minoBag.add(mino2);
+        minoBag.add(mino3);
+        minoBag.add(mino4);
+        minoBag.add(mino5);
+        minoBag.add(mino6);
+        
+        //System.out.println("before "+ minoBag);
+        
+        Collections.shuffle(minoBag);
+        //System.out.println("after "+ minoBag);
+        
+        //loops through the array and selects a shuffled mino
+        for(int i = 0; i < minoBag.size(); i++){
+            if(i <= 7){
+                return minoBag.get(i);//return the selected mino
+            }else{
+                i = 0;
+                Collections.shuffle(minoBag);//reshuffle the arraylsit
+            }
+        }
+        return null;
+    }
+
     public void update(){
-        System.out.println("PE update running");
         currentMino.update();
     }
-    
+
     public void paint(Graphics g){
         super.paint(g);
         Graphics2D g2 = (Graphics2D)g;
-        
+
         //drawing the currentMino
         if(currentMino != null){
             currentMino.draw(g2);
         }
-        
+
     }
 }

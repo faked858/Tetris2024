@@ -66,9 +66,7 @@ public class SuperMino
             KI.upPressed = false;
         }
 
-        //System.out.println("superMino leftPressed is "+KI.leftPressed());
         if(KI.leftPressed){
-            System.out.println("left trigger");
             b[0].x -=Block.CELLSIZE;
             b[1].x -=Block.CELLSIZE;
             b[2].x -=Block.CELLSIZE;
