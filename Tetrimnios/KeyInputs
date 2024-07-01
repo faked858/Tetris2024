@@ -5,28 +5,30 @@ import java.awt.event.KeyEvent;
 //handles all key inputs for the game
 public class KeyInputs implements KeyListener
 {     
-    public boolean upPressed = false;
-    public boolean downPressed = false;
-    public boolean leftPressed = false;
-    public boolean rightPressed = false;
-    
+    public static boolean upPressed;
+    public static boolean downPressed;
+    public static boolean leftPressed;
+    public static boolean rightPressed;
+
     public KeyInputs()
     {
-        
+        System.out.println(this);
+        upPressed = false;
+        downPressed = false;
+        leftPressed = false;
+        rightPressed = false;
     }
-    
+
     public void keyTyped(KeyEvent e){}//dont need this
-    
+
     public void keyPressed(KeyEvent e){
-        int key = e.getKeyCode(); 
-        //System.out.println("key "+key);
+        int key = e.getKeyCode();
         switch(key){
             case KeyEvent.VK_W:
                 upPressed = true;
                 break;
             case KeyEvent.VK_A:
                 leftPressed = true;
-                leftPressed();
                 //System.out.println("leftPressed is "+leftPressed);
                 break;
             case KeyEvent.VK_S:
@@ -37,16 +39,7 @@ public class KeyInputs implements KeyListener
                 break;
         }
     }
-    
+
     public void keyReleased(KeyEvent e){
-    }
-    
-    public boolean leftPressed(){
-        //System.out.println("left funtion running");
-        if(leftPressed){
-            //System.out.println("KeyInputs leftPressed is "+leftPressed);
-            return true;
-        }
-        return false;
     }
 }

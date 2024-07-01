@@ -50,6 +50,7 @@ public class GamePanel extends JPanel implements Runnable
     }
 
     public void updateGame(){
+        System.out.println("PE is "+PE);
         PE.update();
     }
     

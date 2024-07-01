@@ -1,4 +1,5 @@
 package Tetriminos;
+
 import java.awt.*;
 public class SuperMino
 {
@@ -9,11 +10,12 @@ public class SuperMino
     int autoDrop =0;//counts the drop interval
     KeyInputs KI; 
     public int direction = 0;//0,1,2,3 represent each possible direction for each tetrimino
-        public SuperMino()
+    
+    public SuperMino()
     {
         KI = new KeyInputs();
     }
-    
+
     public void createBlock(Color c){//creates each of the four blocks that make up each tetrimino
         b[0] = new Block(c);//each one of these represents a block of a tetrimino
         b[1] = new Block(c);
@@ -24,10 +26,10 @@ public class SuperMino
         tempB[2] = new Block(c);
         tempB[3] = new Block(c);
     }
-    
+
     public void setXY(int x, int y){
     }
-    
+
     public void updateXY(int direction){
         this.direction = direction;//temp array used if a rotation needs to be canceled becuase collision
         b[0].x = tempB[0].x;
@@ -39,60 +41,62 @@ public class SuperMino
         b[3].x = tempB[3].x;
         b[3].y = tempB[3].y;
     }
-    
+
     public void getDirection0(){}
+
     public void getDirection1(){}
+
     public void getDirection2(){}
+
     public void getDirection3(){}
-    
+
     public void update(){//updates the screen and handles tetrimino movement
-        boolean leftTrue = KI.leftPressed;
         
         if(KI.upPressed){
             switch(direction){
                 case 0: getDirection1();
-                break;
+                    break;
                 case 1: getDirection2();
-                break;
+                    break;
                 case 2: getDirection3();
-                break;
+                    break;
                 case 3: getDirection0();
-                break;
+                    break;
             }
             KI.upPressed = false;
         }
-        
-        System.out.println("superMino leftPressed is "+KI.leftPressed());
-        if(leftTrue){
+
+        //System.out.println("superMino leftPressed is "+KI.leftPressed());
+        if(KI.leftPressed){
             System.out.println("left trigger");
             b[0].x -=Block.CELLSIZE;
             b[1].x -=Block.CELLSIZE;
             b[2].x -=Block.CELLSIZE;
             b[3].x -=Block.CELLSIZE;
-            
-            //KI.leftPressed = false;
+
+            KI.leftPressed = false;
         }
-        
+
         if(KI.downPressed){
             b[0].y +=Block.CELLSIZE;
             b[1].y +=Block.CELLSIZE;
             b[2].y +=Block.CELLSIZE;
             b[3].y +=Block.CELLSIZE;
-            
+
             KI.downPressed = false;
             autoDrop = 0;
             //reset the autodrop counter everytime user moves it down
         }
-        
+
         if(KI.rightPressed){
             b[0].x +=Block.CELLSIZE;
             b[1].x +=Block.CELLSIZE;
             b[2].x +=Block.CELLSIZE;
             b[3].x +=Block.CELLSIZE;
-            
+
             KI.rightPressed = false;
         }
-        
+
         autoDrop++;
         if(autoDrop == DROPINTERVAL){//once autodrop reaches 30, reset back to 0
             b[0].y+= Block.CELLSIZE;
@@ -102,7 +106,7 @@ public class SuperMino
             autoDrop = 0;
         }
     }
-    
+
     public void draw(Graphics2D g2){//draw each block
         g2.setColor(b[0].c);
         g2.fillRect(b[0].x, b[0].y, Block.CELLSIZE, Block.CELLSIZE);

@@ -27,6 +27,7 @@ public class PlayEvents extends JPanel
     }
     
     public void update(){
+        System.out.println("PE update running");
         currentMino.update();
     }
     

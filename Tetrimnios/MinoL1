@@ -19,7 +19,7 @@ public class MinoL1 extends SuperMino
         b[0].x = x;
         b[0].y = y;
         b[1].x = x; //b1 is above b0, so x is the same
-        b[1].y = y - Block.CELLSIZE;//
+        b[1].y = y - Block.CELLSIZE;
         b[2].x = x;
         b[2].y = y + Block.CELLSIZE;
         b[3].x = x + Block.CELLSIZE;
@@ -34,12 +34,12 @@ public class MinoL1 extends SuperMino
         
         tempB[0].x = b[0].x;
         tempB[0].y = b[0].y;
-        tempB[1].x = b[1].x; //b1 is above b0, so x is the same
-        tempB[1].y = b[1].y - Block.CELLSIZE;//
-        tempB[2].x = b[2].x;
-        tempB[2].y = b[2].y + Block.CELLSIZE;
-        tempB[3].x = b[3].x + Block.CELLSIZE;
-        tempB[3].y = b[3].y + Block.CELLSIZE;
+        tempB[1].x = b[0].x;
+        tempB[1].y = b[0].y - Block.CELLSIZE;
+        tempB[2].x = b[0].x;
+        tempB[2].y = b[0].y + Block.CELLSIZE;
+        tempB[3].x = b[0].x + Block.CELLSIZE;
+        tempB[3].y = b[0].y + Block.CELLSIZE;
         
         updateXY(0);
     }
