@@ -4,11 +4,14 @@ import javax.swing.JPanel;
 import javax.swing.JFrame;
 import java.io.*;
 import java.lang.Thread;
+import Tetriminos.KeyInputs;
 public class GamePanel extends JPanel implements Runnable  
 {
     public static final int WIDTH = 320;
     public static final int HEIGHT = 640;
-    final int FPS = 1/60;
+    static final int FRAMETIME = 16;//length of a single tick in time, in miliseconds, roughly 60 FPS
+    static final int FPS = 1/60;
+    
     Thread gameThread;
     PlayEvents PE;
     Tetris TE;
@@ -18,6 +21,7 @@ public class GamePanel extends JPanel implements Runnable
         this.setBackground(Color.BLACK);
         PE = new PlayEvents();
         TE = new Tetris();
+        //adding the key listener
         this.addKeyListener(new KeyInputs());
         this.setFocusable(true);
     }
@@ -27,14 +31,8 @@ public class GamePanel extends JPanel implements Runnable
         gameThread.start();//automaticly calls the run method
     }
 
-    public void run(){
-        //System.out.println("is this running");
-        //game loop, updates the frames and score etc
-        int FRAMETIME = 16;//length of a single tick in time, in miliseconds, roughly 60 FPS
-        long lastUpdate= 0;
+    public void run(){//game loop, updates the frames and score etc
         while(gameThread != null){
-            //System.out.println("is this running");
-            long currentTime = lastUpdate += FRAMETIME;//current time of the game in miliseconds
             repaint();
             updateGame();
             try{
@@ -42,13 +40,13 @@ public class GamePanel extends JPanel implements Runnable
             }catch (Exception e) {
                 System.out.println(e);
             }
-            
-            //System.out.println(currentTime+" , "+lastUpdate+" , "+FRAMETIME);
         }
     }
 
     public void updateGame(){
-        PE.update();
+        if(KeyInputs.pausePressed == false){//only update the game loop when the game isnt paused
+            PE.update();
+        }
     }
     
     public void paint(Graphics g){
