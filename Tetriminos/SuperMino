@@ -11,9 +11,10 @@ public class SuperMino
     final static int RIGHTX = 320;
     final static int TOPY = 0;
     final static int BOTTOMY = 640; 
-    int autoDrop =0;//counts the drop interval 
+    int autoDrop = 0;//counts the drop interval 
     public int direction = 0;//0,1,2,3 represent each possible direction for each tetrimino
-    boolean leftColide, rightColide, bottomColide;
+    boolean leftColide, bottomColide, rightColide;
+    public boolean minoActive = true;//is it supposed to be static?
 
     KeyInputs KI;
     public SuperMino()
@@ -39,7 +40,7 @@ public class SuperMino
 
         checkRotationColide();
 
-        if(leftColide == false && rightColide == false && bottomColide == false){
+        if(leftColide == false && rightColide == false && bottomColide == false){//if tetrimino isnt colliding
             this.direction = direction;//temp array used if a rotation needs to be canceled becuase collision
             b[0].x = tempB[0].x;
             b[0].y = tempB[0].y;
@@ -61,9 +62,12 @@ public class SuperMino
     public void getDirection3(){}
 
     public void checkMovementColide(){
-        leftColide = false;
         rightColide = false;
+        leftColide = false;
         bottomColide = false;
+
+        //check static collsion
+        //checkStaticColide();
 
         //wall collision
         //left wall
@@ -88,10 +92,39 @@ public class SuperMino
         }
     }
 
-    public void checkRotationColide(){}
+    public void checkRotationColide(){
+        rightColide = false;
+        leftColide = false;
+        bottomColide = false;
+
+        //check static collsion
+        //PlayEvents.checkStaticColide();
+
+        //loop through the TEMP array and check each block
+        for(int i = 0; i < b.length; i++){
+            if(tempB[i].x < LEFTX){
+                leftColide = true;
+            }
+        }
+
+        //right wall
+        for(int i = 0; i < b.length; i++){
+            if(tempB[i].x + Block.CELLSIZE > RIGHTX){
+                rightColide = true;
+            }
+        }
+
+        //floor collision
+        for(int i = 0; i < b.length; i++){
+            if(tempB[i].y + Block.CELLSIZE > BOTTOMY){
+                bottomColide = true;
+            }
+        }
+    }
+
+
 
     public void update(){//updates the screen and handles tetrimino movement
-
         if(KI.upPressed){
             switch(direction){
                 case 0: getDirection1();
@@ -108,48 +141,52 @@ public class SuperMino
 
         checkMovementColide();
 
-        if(KI.leftPressed){
-            if(leftColide == false){
-                b[0].x -=Block.CELLSIZE;
-                b[1].x -=Block.CELLSIZE;
-                b[2].x -=Block.CELLSIZE;
-                b[3].x -=Block.CELLSIZE;
-            }
-            KI.leftPressed = false;
-        }
-
-        if(KI.downPressed){
-            if(bottomColide == false){
-                b[0].y +=Block.CELLSIZE;
-                b[1].y +=Block.CELLSIZE;
-                b[2].y +=Block.CELLSIZE;
-                b[3].y +=Block.CELLSIZE;
-
-                autoDrop = 0;
-                //reset the autodrop counter everytime user moves it down
-            }
-            KI.downPressed = false;
-        }
-
-        if(KI.rightPressed){
-            if(rightColide == false){
-                b[0].x +=Block.CELLSIZE;
-                b[1].x +=Block.CELLSIZE;
-                b[2].x +=Block.CELLSIZE;
-                b[3].x +=Block.CELLSIZE;
-            }
-            KI.rightPressed = false;
-        }
-
-        autoDrop++;
-        if(autoDrop == DROPINTERVAL){//once autodrop reaches 30, reset back to 0
-            if(bottomColide == false){
+        if(bottomColide){//if tetrimino is coliding with the floor, set to inactive
+            minoActive = false;
+        }else{// if tetrimino is active, allow movement
+            //auto falling feature
+            autoDrop++;
+            if(autoDrop == DROPINTERVAL){//once autodrop reaches 30, reset back to 0
                 b[0].y+= Block.CELLSIZE;
                 b[1].y+= Block.CELLSIZE;
                 b[2].y+= Block.CELLSIZE;
                 b[3].y+= Block.CELLSIZE;
+                autoDrop = 0;
             }
-            autoDrop = 0;
+
+            //move right
+            if(KI.rightPressed){
+                if(rightColide == false){
+                    b[0].x +=Block.CELLSIZE;
+                    b[1].x +=Block.CELLSIZE;
+                    b[2].x +=Block.CELLSIZE;
+                    b[3].x +=Block.CELLSIZE;
+                }
+                KI.rightPressed = false;
+            }
+
+            if(KI.downPressed){
+                if(bottomColide == false){
+                    b[0].y +=Block.CELLSIZE;
+                    b[1].y +=Block.CELLSIZE;
+                    b[2].y +=Block.CELLSIZE;
+                    b[3].y +=Block.CELLSIZE;
+
+                    autoDrop = 0;
+                    //reset the autodrop counter everytime user moves it down
+                }
+                KI.downPressed = false;
+            }
+
+            if(KI.leftPressed){
+                if(leftColide == false){
+                    b[0].x -=Block.CELLSIZE;
+                    b[1].x -=Block.CELLSIZE;
+                    b[2].x -=Block.CELLSIZE;
+                    b[3].x -=Block.CELLSIZE;
+                }
+                KI.leftPressed = false;
+            }
         }
     }
 
