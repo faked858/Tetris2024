@@ -8,6 +8,7 @@ import java.util.Random;
 
 import Tetriminos.SuperMino;
 import Tetriminos.Block;
+import Tetriminos.KeyInputs;
 public class PlayEvents extends JPanel
 {
     //class that will manage all events on the board, including score, clearing lines, etc
@@ -26,7 +27,6 @@ public class PlayEvents extends JPanel
     {
         currentMino = minoArray();
         currentMino.setXY(DEFAULTX,DEFAULTY);
-
     }
 
     public SuperMino minoArray(){
@@ -67,7 +67,7 @@ public class PlayEvents extends JPanel
         currentMino.update();
     }
 
-    public void paint(Graphics g){
+    public void paint(Graphics g){//where all the drawing happens
         super.paint(g);
         Graphics2D g2 = (Graphics2D)g;
 
@@ -76,5 +76,13 @@ public class PlayEvents extends JPanel
             currentMino.draw(g2);
         }
 
+        //draw the pause menu
+        g2.setColor(Color.white);
+        g2.setFont(g2.getFont().deriveFont(40f));
+        if(KeyInputs.pausePressed){
+            int x = LEFTX + 70;
+            int y = TOPY + 70;
+            g2.drawString("PAUSED",x ,y);
+        }
     }
 }

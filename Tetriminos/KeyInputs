@@ -33,9 +33,13 @@ public class KeyInputs implements KeyListener
             case KeyEvent.VK_D:
                 rightPressed = true;
                 break;
+            case KeyEvent.VK_SPACE:
+                if(pausePressed){
+                    pausePressed = false;
+                }else pausePressed = true;
+                break;
         }
     }
-
     public void keyReleased(KeyEvent e){
     }
 }

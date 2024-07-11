@@ -14,7 +14,7 @@ public class SuperMino
     int autoDrop =0;//counts the drop interval 
     public int direction = 0;//0,1,2,3 represent each possible direction for each tetrimino
     boolean leftColide, rightColide, bottomColide;
-    
+
     KeyInputs KI;
     public SuperMino()
     {
@@ -36,15 +36,20 @@ public class SuperMino
     }
 
     public void updateXY(int direction){
-        this.direction = direction;//temp array used if a rotation needs to be canceled becuase collision
-        b[0].x = tempB[0].x;
-        b[0].y = tempB[0].y;
-        b[1].x = tempB[1].x;
-        b[1].y = tempB[1].y;
-        b[2].x = tempB[2].x;
-        b[2].y = tempB[2].y;
-        b[3].x = tempB[3].x;
-        b[3].y = tempB[3].y;
+
+        checkRotationColide();
+
+        if(leftColide == false && rightColide == false && bottomColide == false){
+            this.direction = direction;//temp array used if a rotation needs to be canceled becuase collision
+            b[0].x = tempB[0].x;
+            b[0].y = tempB[0].y;
+            b[1].x = tempB[1].x;
+            b[1].y = tempB[1].y;
+            b[2].x = tempB[2].x;
+            b[2].y = tempB[2].y;
+            b[3].x = tempB[3].x;
+            b[3].y = tempB[3].y;
+        }        
     }
 
     public void getDirection0(){}
@@ -54,12 +59,12 @@ public class SuperMino
     public void getDirection2(){}
 
     public void getDirection3(){}
-    
+
     public void checkMovementColide(){
         leftColide = false;
         rightColide = false;
         bottomColide = false;
-        
+
         //wall collision
         //left wall
         for(int i = 0; i < b.length; i++){//loop through array and check each block
@@ -67,14 +72,14 @@ public class SuperMino
                 leftColide = true;
             }
         }
-        
+
         //right wall
         for(int i = 0; i < b.length; i++){
             if(b[i].x + Block.CELLSIZE == RIGHTX){
                 rightColide = true;
             }
         }
-        
+
         //floor collision
         for(int i = 0; i < b.length; i++){
             if(b[i].y + Block.CELLSIZE == BOTTOMY){
@@ -82,11 +87,11 @@ public class SuperMino
             }
         }
     }
-    
+
     public void checkRotationColide(){}
 
     public void update(){//updates the screen and handles tetrimino movement
-        
+
         if(KI.upPressed){
             switch(direction){
                 case 0: getDirection1();
@@ -100,9 +105,9 @@ public class SuperMino
             }
             KI.upPressed = false;
         }
-        
+
         checkMovementColide();
-        
+
         if(KI.leftPressed){
             if(leftColide == false){
                 b[0].x -=Block.CELLSIZE;
@@ -119,7 +124,7 @@ public class SuperMino
                 b[1].y +=Block.CELLSIZE;
                 b[2].y +=Block.CELLSIZE;
                 b[3].y +=Block.CELLSIZE;
-                
+
                 autoDrop = 0;
                 //reset the autodrop counter everytime user moves it down
             }
