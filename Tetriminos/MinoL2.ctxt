@@ -1,0 +1,15 @@
+#BlueJ class context
+comment0.target=MinoL2
+comment1.params=
+comment1.target=MinoL2()
+comment2.params=x\ y
+comment2.target=void\ setXY(int,\ int)
+comment3.params=
+comment3.target=void\ getDirection0()
+comment4.params=
+comment4.target=void\ getDirection1()
+comment5.params=
+comment5.target=void\ getDirection2()
+comment6.params=
+comment6.target=void\ getDirection3()
+numComments=7
