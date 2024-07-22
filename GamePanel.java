@@ -33,7 +33,6 @@ public class GamePanel extends JPanel implements Runnable
         while(gameThread != null){
             repaint();
             updateGame();
-            System.out.println(KeyInputs.startOn);
             try{
                 Thread.sleep(FRAMETIME);
             }catch (Exception e) {

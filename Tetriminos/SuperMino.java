@@ -11,10 +11,11 @@ public class SuperMino
     
     final static int DROPINTERVAL = 30; //every 30 frames a tetrimino will drop, or roughly every half second
     public  static int blockMultiplier = 10;//has to be an even number. width of the board, in blocks
+    public static int yBlockMultiplier = 20;//same as above variable, but for y axis
     public  static int LEFTX = 0;
     public  static int RIGHTX = Block.CELLSIZE*blockMultiplier;//multiples of 32, to fit 32x32 size blocks evenly
     public  static int TOPY = 0;
-    public  static int BOTTOMY = 640;
+    public  static int BOTTOMY = Block.CELLSIZE*yBlockMultiplier;
     
     int autoDrop = 0;//counts the drop interval 
     int direction = 0;//0,1,2,3 represent each possible direction for each tetrimino

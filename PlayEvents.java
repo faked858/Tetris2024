@@ -35,7 +35,6 @@ public class PlayEvents extends JPanel
 
     public SuperMino active = new SuperMino();
     boolean gameOver = false;
-    public Image backgroundImg;
 
     public PlayEvents()
     {
@@ -234,10 +233,16 @@ public class PlayEvents extends JPanel
             int y2 = TOPY + 70;
             g2.drawString("PAUSED",x2 ,y2);
         }else if(!KeyInputs.startOn){
+            int logoX = RIGHTX/2-81;
+            //draw the tetris logo
+            final String logoFile="TetrisLogo.png";
+            ImageIcon logo = new ImageIcon(logoFile);
+            logo.paintIcon(this,g2,logoX,40);
+            
             //draw start game button
             final String fileName="E_button.png";
             ImageIcon image = new ImageIcon(fileName);
-            image.paintIcon(this,g2,20,20);
+            image.paintIcon(this,g2,logoX+45,100);
         }
     }
 }
