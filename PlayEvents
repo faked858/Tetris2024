@@ -1,43 +1,125 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.*;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
+import java.util.ArrayList;
+import java.util.Random;
 
 import Tetriminos.SuperMino;
 import Tetriminos.Block;
+import Tetriminos.KeyInputs;
 public class PlayEvents extends JPanel
 {
     //class that will manage all events on the board, including score, clearing lines, etc
+
     //all sides of the play area
     final static int LEFTX = 0;
     final static int RIGHTX = 320;
     final static int TOPY = 0;
     final static int BOTTOMY = 640;
-    
-    
-    SuperMino currentMino;
+
+    //starting x.y positions for the tetriminos
     final static int DEFAULTX = RIGHTX/2;
-    final static int DEFAULTY = TOPY + 2*Block.CELLSIZE;//starting x.y positions for the tetriminos
-    
+    final static int DEFAULTY = TOPY + 2*Block.CELLSIZE;
+
+    ArrayList<SuperMino> minoBag = new ArrayList<SuperMino>();//holds the upcoming tetriminos
+    public static ArrayList<Block> staticBlocks = new ArrayList<>();//all inactive tetriminos
+
+    SuperMino currentMino;
+    SuperMino nextMino;
+
+    public SuperMino active = new SuperMino();
+    boolean minoActive = active.minoActive;
+
     public PlayEvents()
     {
-        currentMino = new Tetriminos.MinoL1();
+        //set starting minos
+        currentMino = selectMino();
         currentMino.setXY(DEFAULTX,DEFAULTY);
+
+        nextMino = selectMino();
+    }
+
+    public SuperMino selectMino(){
+        //add two of each mino to the minobag
         
+        if(minoBag.size() == 0){
+            minoBag.add(new Tetriminos.MinoL1());
+            minoBag.add(new Tetriminos.MinoL1());
+            minoBag.add(new Tetriminos.MinoL2());
+            minoBag.add(new Tetriminos.MinoL2());
+            minoBag.add(new Tetriminos.MinoT());
+            minoBag.add(new Tetriminos.MinoT());
+            minoBag.add(new Tetriminos.MinoI());
+            minoBag.add(new Tetriminos.MinoI());
+            minoBag.add(new Tetriminos.MinoO());
+            minoBag.add(new Tetriminos.MinoO());
+            minoBag.add(new Tetriminos.MinoS1());
+            minoBag.add(new Tetriminos.MinoS1());
+            minoBag.add(new Tetriminos.MinoS2());
+            minoBag.add(new Tetriminos.MinoS2());
+            Collections.shuffle(minoBag);
+        }
+
+        //loops through the array and selects a shuffled mino
+        for(int i = 0; i <= minoBag.size(); i++){
+            if(i <= minoBag.size()){
+                Tetriminos.SuperMino temp = minoBag.get(i);
+                minoBag.remove(i);
+                System.out.println(temp);
+                return temp;//return the selected mino
+            }else{
+                i = 0;
+            }
+        }
+        return null;
+    }
+    
+    public void checkStaticColide(){//checks collision with static blocks array
+        for(int i=0; i < staticBlocks.size(); i++){
+            
+        }
     }
     
     public void update(){
-        currentMino.update();
+        if(currentMino.minoActive == false){
+            //if the current mino isnt active, put it in staticBlocks
+            staticBlocks.add(currentMino.b[0]);
+            staticBlocks.add(currentMino.b[1]);
+            staticBlocks.add(currentMino.b[2]);
+            staticBlocks.add(currentMino.b[3]);
+
+            //get the next mino
+            currentMino = nextMino;
+            currentMino.setXY(DEFAULTX,DEFAULTY);
+            nextMino = selectMino();//select the next mino
+        }else{// if current mino is active, update mino
+            currentMino.update();
+        }
     }
-    
-    public void paint(Graphics g){
+
+    public void paint(Graphics g){//where all the drawing happens
         super.paint(g);
         Graphics2D g2 = (Graphics2D)g;
-        
-        //drawing the currentMino
+
+        //draw the currentMino
         if(currentMino != null){
             currentMino.draw(g2);
         }
-        
+
+        //draw the static minos
+        for(int i = 0; i < staticBlocks.size(); i++){
+            staticBlocks.get(i).draw(g2);
+        }
+
+        //draw the pause menu
+        g2.setColor(Color.white);
+        g2.setFont(g2.getFont().deriveFont(40f));
+        if(KeyInputs.pausePressed){
+            int x = LEFTX + 70;
+            int y = TOPY + 70;
+            g2.drawString("PAUSED",x ,y);
+        }
     }
 }

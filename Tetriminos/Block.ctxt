@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=Block
+comment1.params=c
+comment1.target=Block(java.awt.Color)
+comment2.params=g2
+comment2.target=void\ draw(java.awt.Graphics2D)
+numComments=3
