@@ -33,6 +33,7 @@ public class GamePanel extends JPanel implements Runnable
         while(gameThread != null){
             repaint();
             updateGame();
+            System.out.println(KeyInputs.startOn);
             try{
                 Thread.sleep(FRAMETIME);
             }catch (Exception e) {
@@ -42,7 +43,7 @@ public class GamePanel extends JPanel implements Runnable
     }
 
     public void updateGame(){
-        if(KeyInputs.pausePressed == false && PE.gameOver == false){//only update the game loop when the game isnt paused or game over
+        if(KeyInputs.pausePressed == false && PE.gameOver == false && KeyInputs.startOn == true){//only update the game loop when the game isnt paused or game over
             PE.update();
         }
     }

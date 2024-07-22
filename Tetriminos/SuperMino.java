@@ -10,7 +10,7 @@ public class SuperMino
     public Block tempB[] = new Block[4];//two block classes
     
     final static int DROPINTERVAL = 30; //every 30 frames a tetrimino will drop, or roughly every half second
-    public  static int blockMultiplier = 12;//has to be an even number. width of the board, in blocks
+    public  static int blockMultiplier = 10;//has to be an even number. width of the board, in blocks
     public  static int LEFTX = 0;
     public  static int RIGHTX = Block.CELLSIZE*blockMultiplier;//multiples of 32, to fit 32x32 size blocks evenly
     public  static int TOPY = 0;

@@ -34,8 +34,8 @@ public class PlayEvents extends JPanel
     SuperMino nextMino;
 
     public SuperMino active = new SuperMino();
-    //boolean minoActive = active.minoActive;
     boolean gameOver = false;
+    public Image backgroundImg;
 
     public PlayEvents()
     {
@@ -191,33 +191,36 @@ public class PlayEvents extends JPanel
         super.paint(g);
         Graphics2D g2 = (Graphics2D)g;
 
-        //draw the currentMino
-        if(currentMino != null){
-            currentMino.draw(g2);
+
+        if(KeyInputs.startOn){//once the game has started
+            //draw the currentMino
+            if(currentMino != null){
+                currentMino.draw(g2);
+            }
+
+            //draw the static minos
+            for(int i = 0; i < SuperMino.staticBlocks.size(); i++){
+                SuperMino.staticBlocks.get(i).draw(g2);
+            }
+            
+            
+            //draw score counter
+            //font
+            g2.setColor(Color.orange);
+            g2.setFont(g2.getFont().deriveFont(25f));
+            //x,y location
+            String s = String.valueOf(score);
+            int scoreWidth = g.getFontMetrics().stringWidth(s);
+            int scoreX = RIGHTX-5-scoreWidth;//making sure no matter how big score is, it wont clip outside the board
+            g2.drawString(s,scoreX,25);
+
+            //draw highscore
+            int x = 10;
+            int y = 25;
+            g2.drawString("highscore: "+highScore,x,y);
         }
 
-        //draw the static minos
-        for(int i = 0; i < SuperMino.staticBlocks.size(); i++){
-            SuperMino.staticBlocks.get(i).draw(g2);
-        }
-
-        //draw score counter
-        //font
-        g2.setColor(Color.orange);
-        g2.setFont(g2.getFont().deriveFont(25f));
-
-        //x,y location
-        String s = String.valueOf(score);
-        int scoreWidth = g.getFontMetrics().stringWidth(s);
-        int scoreX = RIGHTX-5-scoreWidth;//making sure no matter how big score is, it wont clip outside the board
-        g2.drawString(s,scoreX,25);
-
-        //draw highscore
-        int x = 10;
-        int y = 25;
-        g2.drawString("highscore: "+highScore,x,y);
-
-        //draw pause and game over 
+        //draw pause, game over, start game menus
         g2.setColor(Color.white);
         g2.setFont(g2.getFont().deriveFont(40f));
         if(gameOver){
@@ -230,6 +233,11 @@ public class PlayEvents extends JPanel
             int x2 = RIGHTX/2 - width2/2;
             int y2 = TOPY + 70;
             g2.drawString("PAUSED",x2 ,y2);
+        }else if(!KeyInputs.startOn){
+            //draw start game button
+            final String fileName="E_button.png";
+            ImageIcon image = new ImageIcon(fileName);
+            image.paintIcon(this,g2,20,20);
         }
     }
 }
