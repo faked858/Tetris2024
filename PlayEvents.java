@@ -11,7 +11,7 @@ import java.util.*;
 import javax.swing.*;
 public class PlayEvents extends JPanel
 {
-    //class that will manage all events on the board, including score, clearing lines, etc
+    //class that will manage all events on the board, including score, clearing lines, save and load highscore, randomisation and picking each mino, and drawing user interface
 
     //all sides of the play area
     static int LEFTX = SuperMino.LEFTX;
@@ -27,8 +27,9 @@ public class PlayEvents extends JPanel
     //for score
     int score;
     static int highScore;
-
-    ArrayList<SuperMino> minoBag = new ArrayList<>();//holds the upcoming tetriminos
+    
+    //holds and randomizes the upcoming tetriminos
+    ArrayList<SuperMino> minoBag = new ArrayList<>();
 
     SuperMino currentMino;
     SuperMino nextMino;
@@ -47,7 +48,6 @@ public class PlayEvents extends JPanel
 
     public SuperMino selectMino(){
         //add two of each mino to the minobag
-
         if(minoBag.size() == 0){
             minoBag.add(new Tetriminos.MinoL1());
             minoBag.add(new Tetriminos.MinoL1());
@@ -63,7 +63,7 @@ public class PlayEvents extends JPanel
             minoBag.add(new Tetriminos.MinoS1());
             minoBag.add(new Tetriminos.MinoS2());
             minoBag.add(new Tetriminos.MinoS2());
-            Collections.shuffle(minoBag);
+            Collections.shuffle(minoBag);//randomize them
         }
 
         //loops through the array and selects a shuffled mino
@@ -71,7 +71,6 @@ public class PlayEvents extends JPanel
             if(i <= minoBag.size()){
                 Tetriminos.SuperMino temp = minoBag.get(i);
                 minoBag.remove(i);
-                System.out.println(temp);
                 return temp;//return the selected mino
             }else{
                 i = 0;
@@ -88,7 +87,7 @@ public class PlayEvents extends JPanel
             SuperMino.staticBlocks.add(currentMino.b[2]);
             SuperMino.staticBlocks.add(currentMino.b[3]);
 
-            gameOver();
+            gameOver();// check if the game is over before procceding
 
             currentMino.deactivate = false;
 
@@ -148,7 +147,6 @@ public class PlayEvents extends JPanel
                         }
                     }
                 }
-
                 blockCount = 0;
                 x = LEFTX;
                 y+=Block.CELLSIZE;
@@ -190,7 +188,6 @@ public class PlayEvents extends JPanel
         super.paint(g);
         Graphics2D g2 = (Graphics2D)g;
 
-
         if(KeyInputs.startOn){//once the game has started
             //draw the currentMino
             if(currentMino != null){
@@ -201,8 +198,7 @@ public class PlayEvents extends JPanel
             for(int i = 0; i < SuperMino.staticBlocks.size(); i++){
                 SuperMino.staticBlocks.get(i).draw(g2);
             }
-            
-            
+                        
             //draw score counter
             //font
             g2.setColor(Color.orange);

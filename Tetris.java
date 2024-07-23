@@ -26,7 +26,7 @@ public class Tetris extends JFrame implements ActionListener{
 
         window.toFront();//put winodw in the front
         window.setVisible(true);//show window
-        gp.launchGame();
+        gp.launchGame();//start loading the game
     }
 
     public void gamePanel(){

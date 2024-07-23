@@ -1,21 +1,20 @@
 package Tetriminos;
-
 import java.awt.*;
 import java.util.ArrayList;
 
-public class SuperMino
+public class SuperMino//handles rotation, collision, and drawing/updating all tetriminos
 {
-    //this class will be the super class for all tetrimios, all minos will extend this class
     public Block b[] = new Block[4];
-    public Block tempB[] = new Block[4];//two block classes
+    public Block tempB[] = new Block[4];//temp array used to test if collision will happen before rotating
     
     final static int DROPINTERVAL = 30; //every 30 frames a tetrimino will drop, or roughly every half second
     public  static int blockMultiplier = 10;//has to be an even number. width of the board, in blocks
     public static int yBlockMultiplier = 20;//same as above variable, but for y axis
+    //edges of the board
     public  static int LEFTX = 0;
     public  static int RIGHTX = Block.CELLSIZE*blockMultiplier;//multiples of 32, to fit 32x32 size blocks evenly
-    public  static int TOPY = 0;
     public  static int BOTTOMY = Block.CELLSIZE*yBlockMultiplier;
+    public  static int TOPY = 0;
     
     int autoDrop = 0;//counts the drop interval 
     int direction = 0;//0,1,2,3 represent each possible direction for each tetrimino
@@ -49,10 +48,10 @@ public class SuperMino
     }
 
     public void updateXY(int direction){
-        checkRotationColide();
+        checkRotationColide();//before updating the minos x,y, check it isnt colliding before its rotated
 
         if(leftColide == false && rightColide == false && bottomColide == false){//if tetrimino isnt colliding
-            this.direction = direction;//temp array used if a rotation needs to be canceled becuase collision
+            this.direction = direction;
             b[0].x = tempB[0].x;
             b[0].y = tempB[0].y;
             b[1].x = tempB[1].x;
