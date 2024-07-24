@@ -6,6 +6,4 @@ comment2.params=
 comment2.target=Tetris()
 comment3.params=args
 comment3.target=void\ main(java.lang.String[])
-comment4.params=
-comment4.target=void\ gamePanel()
-numComments=5
+numComments=4

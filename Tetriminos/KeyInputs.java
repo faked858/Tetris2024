@@ -1,5 +1,4 @@
 package Tetriminos;
-
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 //handles all key inputs for the game
@@ -9,7 +8,6 @@ public class KeyInputs implements KeyListener
     public static boolean startOn;
     public KeyInputs()
     {
-        System.out.println(this);
         upPressed = false;
         downPressed = false;
         leftPressed = false;

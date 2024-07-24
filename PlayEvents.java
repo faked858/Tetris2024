@@ -14,15 +14,15 @@ public class PlayEvents extends JPanel
     //class that will manage all events on the board, including score, clearing lines, save and load highscore, randomisation and picking each mino, and drawing user interface
 
     //all sides of the play area
-    static int LEFTX = SuperMino.LEFTX;
-    static int RIGHTX = SuperMino.RIGHTX;
-    static int TOPY = SuperMino.TOPY;
-    static int BOTTOMY = SuperMino.BOTTOMY;
+    static int leftX = SuperMino.leftX;
+    static int rightX = SuperMino.rightX;
+    static int topY = SuperMino.topY;
+    static int bottomY = SuperMino.bottomY;
     static int rowLength = SuperMino.blockMultiplier;
-
+    
     //starting x.y positions for the tetriminos
-    final static int DEFAULTX = RIGHTX/2;
-    final static int DEFAULTY = TOPY + 2*Block.CELLSIZE;
+    final static int DEFAULTX = rightX/2;
+    final static int DEFAULTY = topY + 2*Block.CELLSIZE;
 
     //for score
     int score;
@@ -48,7 +48,7 @@ public class PlayEvents extends JPanel
 
     public SuperMino selectMino(){
         //add two of each mino to the minobag
-        if(minoBag.size() == 0){
+        if(minoBag.isEmpty()){
             minoBag.add(new Tetriminos.MinoL1());
             minoBag.add(new Tetriminos.MinoL1());
             minoBag.add(new Tetriminos.MinoL2());
@@ -119,9 +119,9 @@ public class PlayEvents extends JPanel
 
     private void lineDelete(){
         int blockCount = 0;
-        int x = LEFTX;
-        int y = TOPY;
-        while(x < RIGHTX && y < BOTTOMY){//loop through  the play area
+        int x = leftX;
+        int y = topY;
+        while(x < rightX && y < bottomY){//loop through  the play area
             for(int i =0; i < SuperMino.staticBlocks.size(); i++){//loop through staticBlocks
                 //if there is a static block where x&y currently are, count it
                 if(SuperMino.staticBlocks.get(i).x == x && SuperMino.staticBlocks.get(i).y == y){
@@ -132,7 +132,7 @@ public class PlayEvents extends JPanel
             x+= Block.CELLSIZE;
 
             //once the scan reaches the rigth side, move down and continue from the left side
-            if(x == RIGHTX){
+            if(x == rightX){
                 if(blockCount == rowLength){//if the row is filled with static blocks, delete it
                     for(int i = SuperMino.staticBlocks.size()-1; i > -1; i--){//loop through static blocks from top to bottom
                         if(SuperMino.staticBlocks.get(i).y == y){
@@ -148,8 +148,8 @@ public class PlayEvents extends JPanel
                     }
                 }
                 blockCount = 0;
-                x = LEFTX;
-                y+=Block.CELLSIZE;
+                x = leftX;
+                y += Block.CELLSIZE;
             }
         }
         score += 10;//increase score each time a block is placed
@@ -157,13 +157,13 @@ public class PlayEvents extends JPanel
 
     private void saveHighscore(){
         BufferedWriter bw;
-        try {
+        try{
             bw = new BufferedWriter(new FileWriter(System.getProperty("user.dir") + "/highscore.txt", false));
             bw.write("" + highScore);
             bw.flush();
             bw.close();
             System.out.println("highscore saved: "+ highScore);
-        } catch (IOException e) {
+        }catch(IOException e){
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error: could not save highscore", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -171,11 +171,11 @@ public class PlayEvents extends JPanel
     public static void loadHighscore(){
         BufferedReader br;
         String line = "";
-        try {
+        try{
             br = new BufferedReader(new FileReader(System.getProperty("user.dir") + "/highscore.txt"));
             line = br.readLine();
             br.close();
-        } catch (IOException e) {
+        }catch(IOException e){
             line = "";
         }
 
@@ -200,13 +200,12 @@ public class PlayEvents extends JPanel
             }
                         
             //draw score counter
-            //font
             g2.setColor(Color.orange);
             g2.setFont(g2.getFont().deriveFont(25f));
             //x,y location
             String s = String.valueOf(score);
             int scoreWidth = g.getFontMetrics().stringWidth(s);
-            int scoreX = RIGHTX-5-scoreWidth;//making sure no matter how big score is, it wont clip outside the board
+            int scoreX = rightX-5-scoreWidth;//making sure no matter how big score is, it wont clip outside the board
             g2.drawString(s,scoreX,25);
 
             //draw highscore
@@ -219,26 +218,36 @@ public class PlayEvents extends JPanel
         g2.setColor(Color.white);
         g2.setFont(g2.getFont().deriveFont(40f));
         if(gameOver){
+            //draw game over
             int width1 = g.getFontMetrics().stringWidth("GAME OVER");
-            int x1 = RIGHTX/2 - width1/2;//centre the text on screen no matter the board width
-            int y1 = TOPY + 70;
-            g2.drawString("GAME OVER",x1 ,y1);
+            int gameOX = rightX/2 - width1/2;//centre the text on screen no matter the board width
+            int gameOY = topY + 70;
+            g2.drawString("GAME OVER",gameOX ,gameOY);
         }else if(KeyInputs.pausePressed){
+            //draw paused
             int width2 = g.getFontMetrics().stringWidth("PASUED");
-            int x2 = RIGHTX/2 - width2/2;
-            int y2 = TOPY + 70;
-            g2.drawString("PAUSED",x2 ,y2);
+            int pauseX = rightX/2 - width2/2;
+            int pauseY = topY + 70;
+            g2.drawString("PAUSED",pauseX ,pauseY);
         }else if(!KeyInputs.startOn){
-            int logoX = RIGHTX/2-81;
+            //draw anything that shows before the game starts
+            int logoX = rightX/2-81;
             //draw the tetris logo
-            final String logoFile="TetrisLogo.png";
+            final String logoFile = "TetrisLogo.png";
             ImageIcon logo = new ImageIcon(logoFile);
             logo.paintIcon(this,g2,logoX,40);
             
             //draw start game button
-            final String fileName="E_button.png";
+            final String fileName = "E_button.png";
             ImageIcon image = new ImageIcon(fileName);
             image.paintIcon(this,g2,logoX+45,100);
+            
+            //draw movement info png
+            int infoX = rightX/2 - 72;//72 is roughly half the width of the movementInfo png in pixels
+            int infoY = bottomY - 70;
+            final String infoFile = "movementInfo.png";
+            ImageIcon info = new ImageIcon(infoFile);
+            info.paintIcon(this,g2,infoX,infoY);
         }
     }
 }

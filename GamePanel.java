@@ -5,20 +5,20 @@ import java.awt.*;
 import javax.swing.JPanel;
 public class GamePanel extends JPanel implements Runnable  
 {
-    public  static int WIDTH = Block.CELLSIZE*SuperMino.blockMultiplier;
-    public  static int HEIGHT = SuperMino.BOTTOMY;
-    static  int FRAMETIME = 16;//length of a single tick in time, in miliseconds, roughly 60 FPS
-    static  int FPS = 1/60;
+    public static int width = Block.CELLSIZE*SuperMino.blockMultiplier;
+    public static int height = SuperMino.bottomY;
+    static final int FRAMETIME = 16;//length of a single tick in time, in miliseconds, roughly 60 FPS
+    static final int FPS = 1/60;
     
     Thread gameThread;
-    PlayEvents PE;
-    Tetris TE;
+    PlayEvents pe;
+    Tetris te;
     public GamePanel()
     {
-        this.setPreferredSize(new Dimension(WIDTH,HEIGHT));
+        this.setPreferredSize(new Dimension(width,height));
         this.setBackground(Color.BLACK);
-        PE = new PlayEvents();
-        TE = new Tetris();
+        pe = new PlayEvents();
+        te = new Tetris();
         //adding the key listener
         this.addKeyListener(new KeyInputs());
         this.setFocusable(true);
@@ -42,14 +42,14 @@ public class GamePanel extends JPanel implements Runnable
     }
 
     public void updateGame(){
-        if(KeyInputs.pausePressed == false && PE.gameOver == false && KeyInputs.startOn == true){//only update the game loop when the game isnt paused or game over
-            PE.update();
+        if(KeyInputs.pausePressed == false && pe.gameOver == false && KeyInputs.startOn == true){//only update the game loop when the game isnt paused or game over
+            pe.update();
         }
     }
     
     public void paint(Graphics g){
         super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
-        PE.paint(g2);
+        pe.paint(g2);
     }
 }

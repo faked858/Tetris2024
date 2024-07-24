@@ -5,7 +5,7 @@ public class Block extends Rectangle
     //class for creating a single block, used to build the tetriminos
     public int x, y;
     public static final int CELLSIZE = 32;//size of each block
-        public Color c;
+    public Color c;
     public Block(Color c)
     {
         this.c=c;

@@ -8,13 +8,13 @@ public class SuperMino//handles rotation, collision, and drawing/updating all te
     public Block tempB[] = new Block[4];//temp array used to test if collision will happen before rotating
     
     final static int DROPINTERVAL = 30; //every 30 frames a tetrimino will drop, or roughly every half second
-    public  static int blockMultiplier = 10;//has to be an even number. width of the board, in blocks
+    public static int blockMultiplier = 10;//has to be an even number. width of the board, in blocks
     public static int yBlockMultiplier = 20;//same as above variable, but for y axis
     //edges of the board
-    public  static int LEFTX = 0;
-    public  static int RIGHTX = Block.CELLSIZE*blockMultiplier;//multiples of 32, to fit 32x32 size blocks evenly
-    public  static int BOTTOMY = Block.CELLSIZE*yBlockMultiplier;
-    public  static int TOPY = 0;
+    public  static int leftX = 0;
+    public  static int rightX = Block.CELLSIZE*blockMultiplier;//multiples of 32, to fit 32x32 size blocks evenly
+    public  static int bottomY = Block.CELLSIZE*yBlockMultiplier;
+    public static int topY = 0;
     
     int autoDrop = 0;//counts the drop interval 
     int direction = 0;//0,1,2,3 represent each possible direction for each tetrimino
@@ -27,10 +27,10 @@ public class SuperMino//handles rotation, collision, and drawing/updating all te
 
     public static ArrayList<Block> staticBlocks = new ArrayList<>();//all inactive tetriminos
     
-    KeyInputs KI;
+    KeyInputs ki;
     public SuperMino()
     {
-        KI = new KeyInputs();
+        ki = new KeyInputs();
     }
 
     public void createBlock(Color c){//creates each of the four blocks that make up each tetrimino
@@ -82,21 +82,21 @@ public class SuperMino//handles rotation, collision, and drawing/updating all te
         //wall collision
         //left wall
         for(int i = 0; i < b.length; i++){//loop through array and check each block
-            if(b[i].x == LEFTX){
+            if(b[i].x == leftX){
                 leftColide = true;
             }
         }
 
         //right wall
         for(int i = 0; i < b.length; i++){
-            if(b[i].x + Block.CELLSIZE == RIGHTX){
+            if(b[i].x + Block.CELLSIZE == rightX){
                 rightColide = true;
             }
         }
 
         //floor collision
         for(int i = 0; i < b.length; i++){
-            if(b[i].y + Block.CELLSIZE == BOTTOMY){
+            if(b[i].y + Block.CELLSIZE == bottomY){
                 bottomColide = true;
             }
         }
@@ -112,21 +112,21 @@ public class SuperMino//handles rotation, collision, and drawing/updating all te
 
         //loop through the TEMP array and check each block
         for(int i = 0; i < b.length; i++){
-            if(tempB[i].x < LEFTX){
+            if(tempB[i].x < leftX){
                 leftColide = true;
             }
         }
 
         //right wall
         for(int i = 0; i < b.length; i++){
-            if(tempB[i].x + Block.CELLSIZE > RIGHTX){
+            if(tempB[i].x + Block.CELLSIZE > rightX){
                 rightColide = true;
             }
         }
 
         //floor collision
         for(int i = 0; i < b.length; i++){
-            if(tempB[i].y + Block.CELLSIZE > BOTTOMY){
+            if(tempB[i].y + Block.CELLSIZE > bottomY){
                 bottomColide = true;
             }
         }
@@ -165,7 +165,7 @@ public class SuperMino//handles rotation, collision, and drawing/updating all te
             deactivating();
         }
 
-        if(KI.upPressed){
+        if(ki.upPressed){
             switch(direction){
                 case 0: getDirection1();
                     break;
@@ -176,24 +176,24 @@ public class SuperMino//handles rotation, collision, and drawing/updating all te
                 case 3: getDirection0();
                     break;
             }
-            KI.upPressed = false;
+            ki.upPressed = false;
         }
 
         checkMovementColide();
         
         //move right
-        if(KI.rightPressed){
+        if(ki.rightPressed){
             if(rightColide == false){
                 b[0].x +=Block.CELLSIZE;
                 b[1].x +=Block.CELLSIZE;
                 b[2].x +=Block.CELLSIZE;
                 b[3].x +=Block.CELLSIZE;
             }
-            KI.rightPressed = false;
+            ki.rightPressed = false;
         }
 
         //move down
-        if(KI.downPressed){
+        if(ki.downPressed){
             if(bottomColide == false){
                 b[0].y +=Block.CELLSIZE;
                 b[1].y +=Block.CELLSIZE;
@@ -203,18 +203,18 @@ public class SuperMino//handles rotation, collision, and drawing/updating all te
                 autoDrop = 0;
                 //reset the autodrop counter everytime user moves it down
             }
-            KI.downPressed = false;
+            ki.downPressed = false;
         }
 
         //move left
-        if(KI.leftPressed){
+        if(ki.leftPressed){
             if(leftColide == false){
                 b[0].x -=Block.CELLSIZE;
                 b[1].x -=Block.CELLSIZE;
                 b[2].x -=Block.CELLSIZE;
                 b[3].x -=Block.CELLSIZE;
             }
-            KI.leftPressed = false;
+            ki.leftPressed = false;
         }
         
         if(bottomColide){//if tetrimino is coliding with the floor, deactivate
