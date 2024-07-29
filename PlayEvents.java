@@ -42,11 +42,10 @@ public class PlayEvents extends JPanel
         //set starting minos
         currentMino = selectMino();
         currentMino.setXY(DEFAULTX,DEFAULTY);
-
         nextMino = selectMino();
     }
 
-    public SuperMino selectMino(){
+    public SuperMino selectMino(){//manages what minos will come next in the game loop
         //add two of each mino to the minobag
         if(minoBag.isEmpty()){
             minoBag.add(new Tetriminos.MinoL1());
@@ -117,7 +116,7 @@ public class PlayEvents extends JPanel
         }
     }
 
-    private void lineDelete(){
+    private void lineDelete(){//deletes full lines of blocks when necessary
         int blockCount = 0;
         int x = leftX;
         int y = topY;
@@ -129,15 +128,15 @@ public class PlayEvents extends JPanel
                 }
             }
 
-            x+= Block.CELLSIZE;
+            x += Block.CELLSIZE;
 
-            //once the scan reaches the rigth side, move down and continue from the left side
+            //once the scan reaches the right side, move down and continue from the left side
             if(x == rightX){
                 if(blockCount == rowLength){//if the row is filled with static blocks, delete it
                     for(int i = SuperMino.staticBlocks.size()-1; i > -1; i--){//loop through static blocks from top to bottom
                         if(SuperMino.staticBlocks.get(i).y == y){
                             SuperMino.staticBlocks.remove(i);//remove selected block
-                            score += 10;//increase score for every block deleted, if board is large and liens are long, more score will be added because its harder
+                            score += 10;//increase score for every block deleted, if board is large and lines are long, more score will be added relative to difficulty
                         }
                     }
                     //once a row has been deleted, move everything above it down
@@ -155,24 +154,23 @@ public class PlayEvents extends JPanel
         score += 10;//increase score each time a block is placed
     }
 
-    private void saveHighscore(){
+    private void saveHighscore(){//handles saving high score
         BufferedWriter bw;
         try{
-            bw = new BufferedWriter(new FileWriter(System.getProperty("user.dir") + "/highscore.txt", false));
-            bw.write("" + highScore);
-            bw.flush();
+            bw = new BufferedWriter(new FileWriter(System.getProperty("user.dir") + "/highscore.txt", false));//save highscore to new file highscore.txt
+            bw.write("" + highScore);//write down highscore in the file
+            bw.flush();//saves data to the file
             bw.close();
-            System.out.println("highscore saved: "+ highScore);
         }catch(IOException e){
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error: could not save highscore", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    public static void loadHighscore(){
+    public static void loadHighscore(){//handles loading highscore when a new game is created
         BufferedReader br;
         String line = "";
         try{
-            br = new BufferedReader(new FileReader(System.getProperty("user.dir") + "/highscore.txt"));
+            br = new BufferedReader(new FileReader(System.getProperty("user.dir") + "/highscore.txt"));//specified location from where to read
             line = br.readLine();
             br.close();
         }catch(IOException e){

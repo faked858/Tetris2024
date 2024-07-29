@@ -21,9 +21,9 @@ public class SuperMino//handles rotation, collision, and drawing/updating all te
     int deactivateCount = 0;//for the sliding when touching the floor mechanic
     public static int addScore;//for counting score when a mino is speedfalling
     
-    boolean leftColide, bottomColide, rightColide;
-    public boolean minoActive = true;
-    public boolean deactivate;
+    boolean leftColide, bottomColide, rightColide;//used to help determine if tetriminos are coliding with walls and other tetriminos
+    public boolean minoActive = true;//if active, tetrimino can freely move, used to help determine if mino is static or not
+    public boolean deactivate;//true when bottomColide is true, used to make mino static once coliding with floor or static minos
 
     public static ArrayList<Block> staticBlocks = new ArrayList<>();//all inactive tetriminos
     
@@ -49,7 +49,6 @@ public class SuperMino//handles rotation, collision, and drawing/updating all te
 
     public void updateXY(int direction){
         checkRotationColide();//before updating the minos x,y, check it isnt colliding before its rotated
-
         if(leftColide == false && rightColide == false && bottomColide == false){//if tetrimino isnt colliding
             this.direction = direction;
             b[0].x = tempB[0].x;
@@ -72,11 +71,12 @@ public class SuperMino//handles rotation, collision, and drawing/updating all te
     public void getDirection3(){}
 
     public void checkMovementColide(){
+        //changes these global variables based on weather or not the tetriminos are coliding with the left, right, and bottom walls
         rightColide = false;
         leftColide = false;
         bottomColide = false;
 
-        //check static collsion
+        //check if tetrimino is coliding with static tetriminos
         checkStaticColide();
 
         //wall collision
@@ -102,15 +102,16 @@ public class SuperMino//handles rotation, collision, and drawing/updating all te
         }
     }
 
-    public void checkRotationColide(){
+    public void checkRotationColide(){//checks if tetrimino will colide with anything before its rotated
         rightColide = false;
         leftColide = false;
         bottomColide = false;
 
-        //check static collsion
+        //check if tetrimino is coliding with static tetriminos
         checkStaticColide();
 
         //loop through the TEMP array and check each block
+        //left wall
         for(int i = 0; i < b.length; i++){
             if(tempB[i].x < leftX){
                 leftColide = true;
@@ -161,11 +162,11 @@ public class SuperMino//handles rotation, collision, and drawing/updating all te
     }
 
     public void update(){//updates the screen and handles tetrimino movement
-        if(deactivate){
+        if(deactivate){//if mino is coliding, deactivate it and make it static
             deactivating();
         }
 
-        if(ki.upPressed){
+        if(ki.upPressed){//get direction based on key inputs
             switch(direction){
                 case 0: getDirection1();
                     break;
@@ -179,7 +180,7 @@ public class SuperMino//handles rotation, collision, and drawing/updating all te
             ki.upPressed = false;
         }
 
-        checkMovementColide();
+        checkMovementColide();//before moving mino, check if its coliding
         
         //move right
         if(ki.rightPressed){
