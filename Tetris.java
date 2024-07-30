@@ -3,10 +3,9 @@ import java.awt.event.*;
 import javax.swing.JFrame;
 import javax.swing.*;
 
-public class Tetris extends JFrame implements ActionListener{
+public class Tetris extends JFrame implements ActionListener{//handles configuring the window the game is displayed on
     public Canvas canvas;
     public JFrame frame;
-
     public void actionPerformed(ActionEvent e){
     }
 
@@ -24,7 +23,7 @@ public class Tetris extends JFrame implements ActionListener{
         final String iconFile = "myIcon.png";
         ImageIcon icon = new ImageIcon(iconFile);
         window.setIconImage(icon.getImage());
-        
+
         //add gamePanel to the window
         GamePanel gP = new GamePanel();
         window.add(gP);

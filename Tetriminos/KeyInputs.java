@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 public class KeyInputs implements KeyListener
 {     
     public static boolean upPressed, downPressed, leftPressed, rightPressed, pausePressed, startPressed;//each button the game uses
-    public static boolean startOn;
+    public static boolean startOn;//whether or not the game has started
     public KeyInputs()
     {
         upPressed = false;
@@ -26,32 +26,31 @@ public class KeyInputs implements KeyListener
             case KeyEvent.VK_UP://arrow keys
                 upPressed = true;
                 break;
-                
             case KeyEvent.VK_A:
                 leftPressed = true;
                 break;
             case KeyEvent.VK_LEFT:
                 leftPressed = true;
                 break;
-                
+
             case KeyEvent.VK_S:
                 downPressed = true;
                 break;
             case KeyEvent.VK_DOWN:
                 downPressed = true;
                 break;
-                
+
             case KeyEvent.VK_D:
                 rightPressed = true;
                 break;
             case KeyEvent.VK_RIGHT:
                 rightPressed = true;
                 break;
-                
-            case KeyEvent.VK_SPACE://pasuing the game
+
+            case KeyEvent.VK_SPACE://pausing the game
                 if(pausePressed){
                     pausePressed = false;
-                }else pausePressed = true;
+                }else pausePressed = true;//toggle pause
                 break;
             case KeyEvent.VK_E://starting the game
                 startPressed = true;

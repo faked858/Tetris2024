@@ -6,27 +6,28 @@ public class SuperMino//handles rotation, collision, and drawing/updating all te
 {
     public Block b[] = new Block[4];
     public Block tempB[] = new Block[4];//temp array used to test if collision will happen before rotating
-    
+
     final static int DROPINTERVAL = 30; //every 30 frames a tetrimino will drop, or roughly every half second
     public static int blockMultiplier = 10;//has to be an even number. width of the board, in blocks
     public static int yBlockMultiplier = 20;//same as above variable, but for y axis
+
     //edges of the board
     public  static int leftX = 0;
     public  static int rightX = Block.CELLSIZE*blockMultiplier;//multiples of 32, to fit 32x32 size blocks evenly
     public  static int bottomY = Block.CELLSIZE*yBlockMultiplier;
     public static int topY = 0;
-    
+
     int autoDrop = 0;//counts the drop interval 
     int direction = 0;//0,1,2,3 represent each possible direction for each tetrimino
     int deactivateCount = 0;//for the sliding when touching the floor mechanic
     public static int addScore;//for counting score when a mino is speedfalling
-    
+
     boolean leftColide, bottomColide, rightColide;//used to help determine if tetriminos are coliding with walls and other tetriminos
     public boolean minoActive = true;//if active, tetrimino can freely move, used to help determine if mino is static or not
     public boolean deactivate;//true when bottomColide is true, used to make mino static once coliding with floor or static minos
 
     public static ArrayList<Block> staticBlocks = new ArrayList<>();//all inactive tetriminos
-    
+
     KeyInputs ki;
     public SuperMino()
     {
@@ -38,7 +39,7 @@ public class SuperMino//handles rotation, collision, and drawing/updating all te
         b[1] = new Block(c);
         b[2] = new Block(c);
         b[3] = new Block(c);
-        tempB[0] = new Block(c);
+        tempB[0] = new Block(c);//temp array so that direction can be set, then checked for collision, then the actual block array can be set to the given direction
         tempB[1] = new Block(c);
         tempB[2] = new Block(c);
         tempB[3] = new Block(c);
@@ -51,7 +52,7 @@ public class SuperMino//handles rotation, collision, and drawing/updating all te
         checkRotationColide();//before updating the minos x,y, check it isnt colliding before its rotated
         if(leftColide == false && rightColide == false && bottomColide == false){//if tetrimino isnt colliding
             this.direction = direction;
-            b[0].x = tempB[0].x;
+            b[0].x = tempB[0].x;//set x,y and direction of the main array once rotation collision has been checked 
             b[0].y = tempB[0].y;
             b[1].x = tempB[1].x;
             b[1].y = tempB[1].y;
@@ -181,7 +182,7 @@ public class SuperMino//handles rotation, collision, and drawing/updating all te
         }
 
         checkMovementColide();//before moving mino, check if its coliding
-        
+
         //move right
         if(ki.rightPressed){
             if(rightColide == false){
@@ -217,7 +218,7 @@ public class SuperMino//handles rotation, collision, and drawing/updating all te
             }
             ki.leftPressed = false;
         }
-        
+
         if(bottomColide){//if tetrimino is coliding with the floor, deactivate
             deactivate = true;
         }else{// if tetrimino is active, allow movement
@@ -232,18 +233,18 @@ public class SuperMino//handles rotation, collision, and drawing/updating all te
             }
         }
     }
-    
+
     private void deactivating(){
         deactivateCount++;
         if(deactivateCount == DROPINTERVAL){// wait for time it takes to drop once to set block static
-            deactivateCount = 0;
+            deactivateCount = 0;//reset count
             checkMovementColide();//check if bottom is still touching the floor
             if(bottomColide){
                 minoActive = false;//set mino to inactive
             }
         }
     }
-    
+
     public void draw(Graphics2D g2){//draw each block
         g2.setColor(b[0].c);
         g2.fillRect(b[0].x, b[0].y, Block.CELLSIZE, Block.CELLSIZE);

@@ -1,20 +1,18 @@
 package Tetriminos;
 import java.awt.*;
 
-
-public class MinoL2 extends SuperMino
+public class MinoL2 extends SuperMino//handles creating the L2 tetrimino and each possible direction
 {
-    
     public MinoL2()
     {
         createBlock(Color.blue);//call the create block method, make it orange
     }
-    
+
     public void setXY(int x, int y){////creates the shape of the block by setting each individual block to its respective coordinates
         //   o b1
         //   o b0
         // o o b2, b3
-        
+
         b[0].x = x;
         b[0].y = y;
         b[1].x = x; 
@@ -25,12 +23,12 @@ public class MinoL2 extends SuperMino
         b[3].y = y + Block.CELLSIZE;
         //when b0 gets updated, all other blocks update to match its position
     }
-    
-    public void getDirection0(){
+
+    public void getDirection0(){//each direction method is called when respective keys have been pressed
         //   o b1
         //   o b0
         // o o b2, b3
-        
+
         tempB[0].x = b[0].x;
         tempB[0].y = b[0].y;
         tempB[1].x = b[0].x;
@@ -39,14 +37,14 @@ public class MinoL2 extends SuperMino
         tempB[2].y = b[0].y + Block.CELLSIZE;
         tempB[3].x = b[0].x - Block.CELLSIZE;
         tempB[3].y = b[0].y + Block.CELLSIZE;
-        
+
         updateXY(0);
     }
-    
+
     public void getDirection1(){
         // o
         // o o o
-        
+
         tempB[0].x = b[0].x;
         tempB[0].y = b[0].y;
         tempB[1].x = b[0].x + Block.CELLSIZE;
@@ -55,15 +53,15 @@ public class MinoL2 extends SuperMino
         tempB[2].y = b[0].y;
         tempB[3].x = b[0].x - Block.CELLSIZE;
         tempB[3].y = b[0].y - Block.CELLSIZE;
-        
+
         updateXY(1);
     }
-    
+
     public void getDirection2(){
         //o o
         //o
         //o
-        
+
         tempB[0].x = b[0].x;
         tempB[0].y = b[0].y;
         tempB[1].x = b[0].x;
@@ -72,14 +70,14 @@ public class MinoL2 extends SuperMino
         tempB[2].y = b[0].y - Block.CELLSIZE;
         tempB[3].x = b[0].x + Block.CELLSIZE;
         tempB[3].y = b[0].y - Block.CELLSIZE;
-        
+
         updateXY(2);
     }
-    
+
     public void getDirection3(){
         // o o o
         //     o
-        
+
         tempB[0].x = b[0].x;
         tempB[0].y = b[0].y;
         tempB[1].x = b[0].x - Block.CELLSIZE;
@@ -88,7 +86,7 @@ public class MinoL2 extends SuperMino
         tempB[2].y = b[0].y;
         tempB[3].x = b[0].x + Block.CELLSIZE;
         tempB[3].y = b[0].y + Block.CELLSIZE;
-        
+
         updateXY(3);
     }
 }

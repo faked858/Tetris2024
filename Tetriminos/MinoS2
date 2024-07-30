@@ -2,7 +2,7 @@ package Tetriminos;
 import java.awt.*;
 
 
-public class MinoS2 extends SuperMino
+public class MinoS2 extends SuperMino//handles creating S1 tetrimino and its directions
 {
     
     public MinoS2()

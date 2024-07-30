@@ -19,7 +19,7 @@ public class PlayEvents extends JPanel
     static int topY = SuperMino.topY;
     static int bottomY = SuperMino.bottomY;
     static int rowLength = SuperMino.blockMultiplier;
-    
+
     //starting x.y positions for the tetriminos
     final static int DEFAULTX = rightX/2;
     final static int DEFAULTY = topY + 2*Block.CELLSIZE;
@@ -27,7 +27,7 @@ public class PlayEvents extends JPanel
     //for score
     int score;
     static int highScore;
-    
+
     //holds and randomizes the upcoming tetriminos
     ArrayList<SuperMino> minoBag = new ArrayList<>();
 
@@ -168,17 +168,16 @@ public class PlayEvents extends JPanel
 
     public static void loadHighscore(){//handles loading highscore when a new game is created
         BufferedReader br;
-        String line = "";
+        String score = "";
         try{
             br = new BufferedReader(new FileReader(System.getProperty("user.dir") + "/highscore.txt"));//specified location from where to read
-            line = br.readLine();
-            br.close();
+            score = br.readLine();//get the previous saved highscore
+            br.close();//finish
         }catch(IOException e){
-            line = "";
+            score = "";
         }
-
-        if(line != ""){
-            highScore = Integer.parseInt(line);
+        if(score != ""){
+            highScore = Integer.parseInt(score);
         }
     }
 
@@ -196,7 +195,7 @@ public class PlayEvents extends JPanel
             for(int i = 0; i < SuperMino.staticBlocks.size(); i++){
                 SuperMino.staticBlocks.get(i).draw(g2);
             }
-                        
+
             //draw score counter
             g2.setColor(Color.orange);
             g2.setFont(g2.getFont().deriveFont(25f));
@@ -212,9 +211,9 @@ public class PlayEvents extends JPanel
             g2.drawString("highscore: "+highScore,x,y);
         }
 
-        //draw pause, game over, start game menus
+        //draw pause, game over, and start game menus
         g2.setColor(Color.white);
-        g2.setFont(g2.getFont().deriveFont(40f));
+        g2.setFont(g2.getFont().deriveFont(40f));//font colour and type
         if(gameOver){
             //draw game over
             int width1 = g.getFontMetrics().stringWidth("GAME OVER");
@@ -234,12 +233,12 @@ public class PlayEvents extends JPanel
             final String logoFile = "TetrisLogo.png";
             ImageIcon logo = new ImageIcon(logoFile);
             logo.paintIcon(this,g2,logoX,40);
-            
+
             //draw start game button
             final String fileName = "E_button.png";
             ImageIcon image = new ImageIcon(fileName);
             image.paintIcon(this,g2,logoX+45,100);
-            
+
             //draw movement info png
             int infoX = rightX/2 - 72;//72 is roughly half the width of the movementInfo png in pixels
             int infoY = bottomY - 70;
